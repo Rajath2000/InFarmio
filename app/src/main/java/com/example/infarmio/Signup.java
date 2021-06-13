@@ -7,32 +7,36 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class Login extends AppCompatActivity {
+public class Signup extends AppCompatActivity {
     TextView loginText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_signup);
 
-        loginText=(TextView)findViewById(R.id.Login_redirecttosignup);
-
-
-
+        //ALL objects Initialization
+        loginText=(TextView)findViewById(R.id.Signup_reditecttologin);
 
 
 
 
 
-        //Redirect to signup
+
+
+
+
+
+
+        //Redirect to Loginpage
         loginText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent signUpIntent=new Intent(Login.this,Signup.class);
-                startActivity(signUpIntent);
+                Intent loginIntent=new Intent(Signup.this,Login.class);
+                startActivity(loginIntent);
                 finish();
             }
         });
-
 
     }
 }
