@@ -98,7 +98,8 @@
                     app:boxBackgroundColor="#FFFFFF"
                     app:boxStrokeColor="#FFFFFF"
                     app:hintTextColor="#1B4332"
-                    app:passwordToggleEnabled="true">
+                    app:passwordToggleEnabled="true"
+                    app:placeholderTextColor="#FFFFFF">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/Login_password"

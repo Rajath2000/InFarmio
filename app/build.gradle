@@ -38,5 +38,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     //Button Dependency
-    compile 'com.github.ksoichiro:richbuttons:0.1.1@aar'
+    implementation 'com.github.ksoichiro:richbuttons:0.1.1@aar'
 }
