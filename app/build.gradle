@@ -39,4 +39,8 @@ dependencies {
 
     //Button Dependency
     implementation 'com.github.ksoichiro:richbuttons:0.1.1@aar'
+
+
+    //Circular image depenency
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }
