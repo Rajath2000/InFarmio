@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">InFarmio</string>
+    <string name="invalid_email">Enter Valid email address</string>
+    <string name="invalid_password">Password Should not be empty</string>
+    <string name="invalid_phone">Enter Valid Phone number</string>
+    <string name="not_matching">password and confirmpassword not matching</string>
+
+
 </resources>

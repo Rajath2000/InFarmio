@@ -43,4 +43,9 @@ dependencies {
 
     //Circular image depenency
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+
+    //Form Validation
+    implementation 'com.basgeekball:awesome-validation:4.3'
+
 }

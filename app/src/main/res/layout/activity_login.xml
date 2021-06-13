@@ -44,6 +44,8 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                    android:id="@+id/layout_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -55,6 +57,7 @@
                     app:hintTextColor="#1B4332">
 
                     <com.google.android.material.textfield.TextInputEditText
+
                         android:id="@+id/Login_Email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -88,6 +91,8 @@
                     tools:ignore="VectorDrawableCompat" />
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/layout_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
