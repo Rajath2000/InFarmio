@@ -49,7 +49,10 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp">
+                    android:layout_marginRight="10dp"
+                    app:boxBackgroundColor="#FFFFFF"
+                    app:boxStrokeColor="#FFFFFF"
+                    app:hintTextColor="#1B4332">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/Login_Email"
@@ -59,7 +62,8 @@
                         android:drawableLeft="@drawable/ic_baseline_email_24"
                         android:drawablePadding="20dp"
                         android:hint="Email Adress"
-                        android:inputType="textEmailAddress" />
+                        android:inputType="textEmailAddress"
+                        android:textColorHint="#FFFFFF" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
@@ -91,6 +95,9 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="80"
+                    app:boxBackgroundColor="#FFFFFF"
+                    app:boxStrokeColor="#FFFFFF"
+                    app:hintTextColor="#1B4332"
                     app:passwordToggleEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
