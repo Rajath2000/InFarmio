@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_green"
+    android:orientation="vertical"
+    android:weightSum="100"
+    tools:context=".Signup">
+
+    <TextView
+        android:id="@+id/Signup_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="Sign Up"
+        android:textColor="@color/text_color"
+        android:textSize="30sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="95"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:weightSum="100">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_margin="30dp"
+            android:src="@drawable/ic_baseline_account_circle_24"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="10"
+            app:boxBackgroundColor="#FFFFFF"
+            app:boxStrokeColor="#FFFFFF"
+            app:hintTextColor="#1B4332">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/Signup_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:drawableLeft="@drawable/ic_baseline_email_24"
+                android:drawablePadding="18dp"
+                android:hint="Email Adress"
+                android:inputType="textEmailAddress"
+                android:textColorHint="#FFFFFF" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="10"
+            app:boxBackgroundColor="#FFFFFF"
+            app:boxStrokeColor="#FFFFFF"
+            app:hintTextColor="#1B4332">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/Signup_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:drawableLeft="@drawable/ic_baseline_phone_24"
+                android:drawablePadding="20dp"
+                android:hint="Phone Number"
+                android:inputType="phone"
+                android:textColorHint="#FFFFFF" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#FFFFFF"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="20"
+                app:srcCompat="@drawable/ic_baseline_vpn_key_24"
+                tools:ignore="VectorDrawableCompat" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="80"
+                app:boxBackgroundColor="#FFFFFF"
+                app:boxStrokeColor="#FFFFFF"
+                app:hintTextColor="#1B4332"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/Signup_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="80"
+                    android:background="#FFFFFF"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:password="false" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#FFFFFF"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="20"
+                app:srcCompat="@drawable/ic_baseline_vpn_key_24"
+                tools:ignore="VectorDrawableCompat" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="80"
+                app:boxBackgroundColor="#FFFFFF"
+                app:boxStrokeColor="#FFFFFF"
+                app:hintTextColor="#1B4332"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/Signup_confirmpassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="80"
+                    android:background="#FFFFFF"
+                    android:hint="Confirm Password"
+                    android:inputType="textPassword"
+                    android:password="false" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/SignUp_button"
+            style="@style/RbButton.Blue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="5"
+            android:text="Submit"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:backgroundTint="#081C15" />
+
+        <TextView
+            android:id="@+id/Signup_reditecttologin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="end"
+            android:text="Already have an account? Login Here"
+            android:textColor="@color/text_color"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+</LinearLayout>
+
+
+
