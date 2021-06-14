@@ -12,12 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.InFarmio">
 
-        <activity android:name=".splashActivity"></activity>
+        <activity android:name=".Signup"></activity>
 
 <!--        <activity android:name=".Signup"></activity>-->
         <activity android:name=".MainActivity"> </activity>
         <activity android:name=".Login"></activity>
-        <activity android:name=".Signup"  android:theme="@style/Theme.splashActivity">
+        <activity android:name=".splashActivity"  android:theme="@style/Theme.splashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
