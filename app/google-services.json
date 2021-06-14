@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "648190429030",
+    "firebase_url": "https://infarmio-default-rtdb.firebaseio.com",
+    "project_id": "infarmio",
+    "storage_bucket": "infarmio.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:648190429030:android:cf9ceef154c8717372aaa7",
+        "android_client_info": {
+          "package_name": "com.example.infarmio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "648190429030-rvt5t27hgmpvqr6iqi8ec4d0pks9t91t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1KzaKKLFneWb8-RNvQSMB2yl-xNTn_lk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "648190429030-rvt5t27hgmpvqr6iqi8ec4d0pks9t91t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
