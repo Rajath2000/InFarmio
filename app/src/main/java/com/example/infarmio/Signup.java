@@ -162,17 +162,6 @@ public class Signup extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
         //Redirect to Loginpage
         loginText.setOnClickListener(new View.OnClickListener() {
             @Override

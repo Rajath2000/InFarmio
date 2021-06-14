@@ -1,27 +1,47 @@
 package com.example.infarmio;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import static android.content.ContentValues.TAG;
 
 public class Login extends AppCompatActivity {
     TextView loginText;
-    TextInputEditText userName,password;
+    TextInputEditText userName,Password;
     Button login;
+    CheckBox checkBox;
+    String dbusername,dbpassword;
 
     //declaring formvalidator objrct
     AwesomeValidation awesomeValidation;
+
+    FirebaseAuth firebaseAuth;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +51,13 @@ public class Login extends AppCompatActivity {
        //converting xml id to java objects
         loginText=(TextView)findViewById(R.id.Login_redirecttosignup);
         userName=findViewById(R.id.Login_Email);
-        password=findViewById(R.id.Login_password);
+        Password=findViewById(R.id.Login_password);
         login=findViewById(R.id.Login_Button);
+        checkBox=findViewById(R.id.Login_checkadmin);
 
         //initalizing formvalidator objrct
+        firebaseAuth=FirebaseAuth.getInstance();
+        progressDialog=new ProgressDialog(Login.this);
         //adding the style for validation
         awesomeValidation=new AwesomeValidation(ValidationStyle.TEXT_INPUT_LAYOUT);
 
@@ -48,20 +71,78 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 if(awesomeValidation.validate())
                 {
-                    Toast.makeText(Login.this, "Validation Sucessfull", Toast.LENGTH_SHORT).show();
+                    String username=emailparser(userName.getText().toString());
+                    String password=Password.getText().toString();
+                    progressDialog.setTitle("Signing in");
+                    progressDialog.setMessage("Please Wait");
+                    progressDialog.setCanceledOnTouchOutside(false);
+                    progressDialog.show();
+                    if(checkBox.isChecked())
+                    {
+                        //Login as admin
+                        DatabaseReference Admindb=FirebaseDatabase.getInstance().getReference().child("Admin");
+                        try {
+                            DatabaseReference adminInstance = Admindb.child(username);
+                            adminInstance.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    //Data from backend
+                                    try {
+                                         dbusername = snapshot.child("adminname").getValue().toString();
+                                         dbpassword = snapshot.child("password").getValue().toString();
+                                    }catch (Exception e){
+                                        Toast.makeText(Login.this, "Invalid Credential", Toast.LENGTH_SHORT).show();
+                                    }
+                                    if (username.equals(dbusername) && password.equals(dbpassword)) {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(Login.this, "Login Sucessful as admin", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(Login.this, "Invalid Credential", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(Login.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }catch (Exception e)
+                        {
+                            Toast.makeText(Login.this, "Invalid Credentail", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else
+                    {
+                        //Login as User
+                        firebaseAuth.signInWithEmailAndPassword(userName.getText().toString(),password)
+                                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if(task.isSuccessful())
+                                        {
+                                            progressDialog.dismiss();
+                                            Toast.makeText(Login.this, "Login Sucessfull as user", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                        else
+                                        {
+                                            progressDialog.dismiss();
+                                            Toast.makeText(Login.this, "Invalid credential", Toast.LENGTH_SHORT).show();
+                                        }
+
+                                    }
+                                });
+
+                    }
                 }
-                else{
+                else
+                    {
                     Toast.makeText(Login.this, "Please Enter the valid Details", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-
-
-
-
-
-
 
 
 
@@ -80,5 +161,14 @@ public class Login extends AppCompatActivity {
         });
 
 
+    }
+    public String emailparser(String Email){
+        String temp="";
+        String[] split_email=Email.split("[@]");
+        for(int j=0;j<=split_email.length-1;j++) {
+            temp=split_email[j];
+            break;
+        }
+        return temp;
     }
 }
