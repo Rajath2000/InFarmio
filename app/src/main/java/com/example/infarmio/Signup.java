@@ -32,7 +32,7 @@ public class Signup extends AppCompatActivity {
 
 
         //Validation Style
-        awesomeValidation=new AwesomeValidation(ValidationStyle.BASIC);
+        awesomeValidation=new AwesomeValidation(ValidationStyle.TEXT_INPUT_LAYOUT);
         //Validation Rules
         awesomeValidation.addValidation(this,R.id.Signup_layout_username, Patterns.EMAIL_ADDRESS,R.string.invalid_email);
         awesomeValidation.addValidation(this,R.id.Signup_layout_phone,"[5-9]{1}[0-9]{9}$",R.string.invalid_phone);

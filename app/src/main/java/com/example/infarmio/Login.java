@@ -36,7 +36,7 @@ public class Login extends AppCompatActivity {
 
         //initalizing formvalidator objrct
         //adding the style for validation
-        awesomeValidation=new AwesomeValidation(ValidationStyle.BASIC);
+        awesomeValidation=new AwesomeValidation(ValidationStyle.TEXT_INPUT_LAYOUT);
 
         //add validation for Email
         awesomeValidation.addValidation(this,R.id.layout_email, Patterns.EMAIL_ADDRESS,R.string.invalid_email);
