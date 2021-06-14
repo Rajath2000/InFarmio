@@ -23,6 +23,7 @@ import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -60,110 +61,104 @@ public class Signup extends AppCompatActivity {
 
     AwesomeValidation awesomeValidation;
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
         //ALL objects Initialization
-        loginText=(TextView)findViewById(R.id.Signup_reditecttologin);
-        Email=findViewById(R.id.Signup_email);
-        PhoneNumber=findViewById(R.id.Signup_phone);
-        Password=findViewById(R.id.Signup_password);
-        Signup=findViewById(R.id.SignUp_button);
+        loginText = (TextView) findViewById(R.id.Signup_reditecttologin);
+        Email = findViewById(R.id.Signup_email);
+        PhoneNumber = findViewById(R.id.Signup_phone);
+        Password = findViewById(R.id.Signup_password);
+        Signup = findViewById(R.id.SignUp_button);
 
         //Browsing Image from Gallary
-        ProfileImage=(CircleImageView) findViewById(R.id.profile_image);
-                    ProfileImage.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //Toast.makeText(Signup.this, "clicked", Toast.LENGTH_SHORT).show();
-                            //Asking permission from user
-                            Dexter.withActivity(Signup.this)
-                                    .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                                    .withListener(new PermissionListener() {
-                                        @Override
-                                        public void onPermissionGranted(PermissionGrantedResponse response)
-                                        {
-                                            //Move to Gallery page
-                                            Intent intent=new Intent(Intent.ACTION_PICK);
-                                            //Setting the type of file
-                                            intent.setType("image/*");
-                                            //Might Through Error
+        ProfileImage = (CircleImageView) findViewById(R.id.profile_image);
+        ProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(Signup.this, "clicked", Toast.LENGTH_SHORT).show();
+                //Asking permission from user
+                Dexter.withActivity(Signup.this)
+                        .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .withListener(new PermissionListener() {
+                            @Override
+                            public void onPermissionGranted(PermissionGrantedResponse response) {
+                                //Move to Gallery page
+                                Intent intent = new Intent(Intent.ACTION_PICK);
+                                //Setting the type of file
+                                intent.setType("image/*");
+                                //Might Through Error
 
-                                            //noinspection deprecation
-                                            startActivityForResult(intent.createChooser(intent,"select Image File"),1);
+                                //noinspection deprecation
+                                startActivityForResult(intent.createChooser(intent, "select Image File"), 1);
 
-                                        }
+                            }
 
-                                        @Override
-                                        public void onPermissionDenied(PermissionDeniedResponse response) {
+                            @Override
+                            public void onPermissionDenied(PermissionDeniedResponse response) {
 
-                                        }
+                            }
 
-                                        @Override
-                                        public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-                                            token.continuePermissionRequest();
-                                        }
-                                    }).check();
-                        }
-                    });
+                            @Override
+                            public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                                token.continuePermissionRequest();
+                            }
+                        }).check();
+            }
+        });
 
         //Validation Style
-        awesomeValidation=new AwesomeValidation(ValidationStyle.TEXT_INPUT_LAYOUT);
+        awesomeValidation = new AwesomeValidation(ValidationStyle.TEXT_INPUT_LAYOUT);
         //Validation Rules
-        awesomeValidation.addValidation(this,R.id.Signup_layout_username, Patterns.EMAIL_ADDRESS,R.string.invalid_email);
-        awesomeValidation.addValidation(this,R.id.Signup_layout_phone,"[5-9]{1}[0-9]{9}$",R.string.invalid_phone);
-        awesomeValidation.addValidation(this,R.id.Signup_layout_password, RegexTemplate.NOT_EMPTY,R.string.invalid_password);
-        awesomeValidation.addValidation(this,R.id.Signup_layout_confirmpassword,R.id.Signup_layout_password,R.string.not_matching);
+        awesomeValidation.addValidation(this, R.id.Signup_layout_username, Patterns.EMAIL_ADDRESS, R.string.invalid_email);
+        awesomeValidation.addValidation(this, R.id.Signup_layout_phone, "[5-9]{1}[0-9]{9}$", R.string.invalid_phone);
+        awesomeValidation.addValidation(this, R.id.Signup_layout_password, RegexTemplate.NOT_EMPTY, R.string.invalid_password);
+        awesomeValidation.addValidation(this, R.id.Signup_layout_confirmpassword, R.id.Signup_layout_password, R.string.not_matching);
 
 
         //signup button action
-        Signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Database Authentication variable
-                authentication=FirebaseAuth.getInstance();
-                //setting up dailogbox
-                mLoadingBar=new ProgressDialog(Signup.this);
-                //On form Validates Sucessfully
-                if(awesomeValidation.validate())
-                {
-                    //Initalizing loading bar
-                    mLoadingBar.setTitle("Registration");
-                    mLoadingBar.setMessage("Please Wait");
-                    mLoadingBar.setCanceledOnTouchOutside(false);
-                    mLoadingBar.show();
-                    //get the Details From Frontend
-                    String email=Email.getText().toString();
-                    String password=Password.getText().toString();
-                    authentication.createUserWithEmailAndPassword(email,password)
-                            .addOnCompleteListener(Signup.this,new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if(task.isSuccessful())
-                                    {
-                                        uploadtofirebase();
-                                        mLoadingBar.dismiss();
-                                        //Redirect to MyFavratious page
-                                        Toast.makeText(Signup.this, "Registraion Sucessfull", Toast.LENGTH_SHORT).show();
-                                    }
-                                    else
-                                    {
-                                        mLoadingBar.dismiss();
-                                        Toast.makeText(Signup.this,task.getException().getMessage().toString(), Toast.LENGTH_SHORT).show();
-                                    }
 
-                                }
-                            });
+            Signup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Database Authentication variable
+                    authentication = FirebaseAuth.getInstance();
+                    //setting up dailogbox
+                    mLoadingBar = new ProgressDialog(Signup.this);
+                    //On form Validates Sucessfully
+                    if (awesomeValidation.validate() && filpath!=null) {
+                        //Initalizing loading bar
+                        mLoadingBar.setTitle("Registration");
+                        mLoadingBar.setMessage("Please Wait");
+                        mLoadingBar.setCanceledOnTouchOutside(false);
+                        mLoadingBar.show();
+                        //get the Details From Frontend
+                        String email = Email.getText().toString();
+                        String password = Password.getText().toString();
+                        authentication.createUserWithEmailAndPassword(email, password)
+                                .addOnCompleteListener(Signup.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            uploadtofirebase();
+                                            mLoadingBar.dismiss();
+                                            //Redirect to MyFavratious page
+                                            Toast.makeText(Signup.this, "Registraion Sucessfull", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            mLoadingBar.dismiss();
+                                            Toast.makeText(Signup.this, task.getException().getMessage().toString(), Toast.LENGTH_SHORT).show();
+                                        }
 
+                                    }
+                                });
+
+                    } else {
+                        Toast.makeText(Signup.this, "Enter Valid Details", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                else
-                {
-                    Toast.makeText(Signup.this, "Enter Valid Details", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+            });
+
 
 
 
