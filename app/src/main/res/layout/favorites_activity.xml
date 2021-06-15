@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightgreen"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:text="Select Favorite Crops"
+            android:textColor="@color/darkgreen"
+            android:textSize="30sp" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/fav_chipgroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:checkedChip="@id/fav_all"
+            app:chipSpacing="10dp"
+            app:chipSpacingHorizontal="10dp"
+            app:chipSpacingVertical="10dp"
+            app:selectionRequired="true"
+            tools:ignore="MissingConstraints">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/fav_all"
+                style="@style/customchipstyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="All Crops"
+                app:chipCornerRadius="5dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/fav_areca"
+                style="@style/customchipstyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Arecanut"
+                app:chipCornerRadius="5dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/fav_coconut"
+                style="@style/customchipstyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Coconut"
+                app:chipCornerRadius="5dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/fav_banana"
+                style="@style/customchipstyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Banana"
+                app:chipCornerRadius="5dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/fav_pepper"
+                style="@style/customchipstyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Pepper"
+                app:chipCornerRadius="5dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/fav_paddy"
+                style="@style/customchipstyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Paddy"
+                app:chipCornerRadius="5dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/fav_cocca"
+                style="@style/customchipstyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Cocca"
+                app:chipCornerRadius="5dp" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.922">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fav_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            app:backgroundTint="#FFFFFF"
+            app:elevation="1dp"
+            app:rippleColor="#000000"
+            app:srcCompat="@drawable/rightarrow" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
