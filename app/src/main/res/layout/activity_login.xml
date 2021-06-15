@@ -36,83 +36,60 @@
             android:orientation="vertical"
             android:weightSum="100">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="10"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
-                    app:boxBackgroundColor="#FFFFFF"
-                    app:boxStrokeColor="#FFFFFF"
-                    app:hintTextColor="#1B4332">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/Login_Email"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#FFFFFF"
-                        android:drawableLeft="@drawable/ic_baseline_email_24"
-                        android:drawablePadding="20dp"
-                        android:hint="Email Adress"
-                        android:inputType="textEmailAddress"
-                        android:textColorHint="#FFFFFF" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_email"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
-                android:background="#FFFFFF"
-                android:orientation="horizontal"
-                android:weightSum="100">
+                android:layout_weight="10"
+                app:boxBackgroundColor="#FFFFFF"
+                app:boxStrokeColor="#FFFFFF"
+                app:hintTextColor="#1B4332"
+                app:startIconDrawable="@drawable/ic_baseline_email_24">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_weight="20"
-                    app:srcCompat="@drawable/ic_baseline_vpn_key_24"
-                    tools:ignore="VectorDrawableCompat" />
+                <com.google.android.material.textfield.TextInputEditText
 
-                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/Login_Email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="80"
-                    app:boxBackgroundColor="#FFFFFF"
-                    app:boxStrokeColor="#FFFFFF"
-                    app:hintTextColor="#1B4332"
-                    app:passwordToggleEnabled="true"
-                    app:placeholderTextColor="#FFFFFF">
+                    android:background="#FFFFFF"
+                    android:drawableLeft="@drawable/ic_baseline_email_24"
+                    android:hint="Email Adress"
+                    android:inputType="textEmailAddress"
+                    android:textColorHint="#FFFFFF" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/Login_password"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="80"
-                        android:background="#FFFFFF"
-                        android:hint="Password"
-                        android:inputType="textPassword"
-                        android:password="false" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="10"
+                app:boxBackgroundColor="#FFFFFF"
+                app:boxStrokeColor="#FFFFFF"
+                app:hintTextColor="#1B4332"
+                app:passwordToggleEnabled="true"
+                app:placeholderTextColor="#FFFFFF"
+                app:startIconDrawable="@drawable/ic_baseline_lock_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/Login_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:password="false" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <CheckBox
                 android:id="@+id/Login_checkadmin"

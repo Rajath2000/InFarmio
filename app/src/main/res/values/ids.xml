@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="invalid_email" type="id"/>
+    <item name="pasword_empty" type="id"/>
+</resources>
