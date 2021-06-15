@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.InFarmio">
         <activity android:name=".UserActivity"></activity>
-        <activity android:name=".Signup" /> <!-- <activity android:name=".Signup"></activity> -->
+        <activity android:name=".Signup"> </activity>
+        <activity android:name=".favorites"></activity><!-- <activity android:name=".Signup"></activity> -->
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".Login" />
         <activity

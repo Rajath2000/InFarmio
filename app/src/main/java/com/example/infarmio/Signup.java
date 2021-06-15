@@ -152,7 +152,11 @@ public class Signup extends AppCompatActivity {
                                                 uploadtofirebase();
                                                 mLoadingBar.dismiss();
                                                 //Redirect to MyFavratious page
+                                                Intent intent = new Intent(Signup.this,favorites.class);
+                                                startActivity(intent);
                                                 Toast.makeText(Signup.this, "Registraion Sucessfull", Toast.LENGTH_SHORT).show();
+
+
                                             } else {
                                                 mLoadingBar.dismiss();
                                                 Toast.makeText(Signup.this, task.getException().getMessage().toString(), Toast.LENGTH_SHORT).show();
