@@ -91,10 +91,12 @@ public class Login extends AppCompatActivity {
                                          dbusername = snapshot.child("adminname").getValue().toString();
                                          dbpassword = snapshot.child("password").getValue().toString();
                                     }catch (Exception e){
+                                        progressDialog.dismiss();
                                         Toast.makeText(Login.this, "Invalid Credential", Toast.LENGTH_SHORT).show();
                                     }
                                     if (username.equals(dbusername) && password.equals(dbpassword)) {
                                         progressDialog.dismiss();
+                                        //redirect to the Home page
                                         Toast.makeText(Login.this, "Login Sucessful as admin", Toast.LENGTH_SHORT).show();
                                     } else {
                                         progressDialog.dismiss();
@@ -110,6 +112,7 @@ public class Login extends AppCompatActivity {
                             });
                         }catch (Exception e)
                         {
+                            progressDialog.dismiss();
                             Toast.makeText(Login.this, "Invalid Credentail", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -124,7 +127,7 @@ public class Login extends AppCompatActivity {
                                         {
                                             progressDialog.dismiss();
                                             Toast.makeText(Login.this, "Login Sucessfull as user", Toast.LENGTH_SHORT).show();
-
+                                            //redirect to Home page
                                         }
                                         else
                                         {

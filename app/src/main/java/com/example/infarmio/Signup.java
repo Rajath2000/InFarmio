@@ -111,7 +111,7 @@ public class Signup extends AppCompatActivity {
         //Validation Style
         awesomeValidation = new AwesomeValidation(ValidationStyle.TEXT_INPUT_LAYOUT);
         //Validation Rules
-        awesomeValidation.addValidation(this, R.id.Signup_layout_username, Patterns.EMAIL_ADDRESS, R.string.invalid_email);
+        awesomeValidation.addValidation(this, R.id.Signup_layout_username, "^[a-zA-Z0-9]+@[a-zA-Z0-9.-]+$", R.string.invalid_email);
         awesomeValidation.addValidation(this, R.id.Signup_layout_phone, "[5-9]{1}[0-9]{9}$", R.string.invalid_phone);
         awesomeValidation.addValidation(this, R.id.Signup_layout_password, RegexTemplate.NOT_EMPTY, R.string.invalid_password);
         awesomeValidation.addValidation(this, R.id.Signup_layout_confirmpassword, R.id.Signup_layout_password, R.string.not_matching);
@@ -154,7 +154,7 @@ public class Signup extends AppCompatActivity {
                                 });
 
                     } else {
-                        Toast.makeText(Signup.this, "Enter Valid Details", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Signup.this, "Enter Valid Details/Please ensure imgae is inserted", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
