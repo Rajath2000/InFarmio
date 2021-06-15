@@ -24,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="20dp"
+            android:fontFamily="@font/abeezee"
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
             android:text="Select Favorite Crops"
@@ -51,6 +52,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
+                android:fontFamily="@font/abeezee"
                 android:text="All Crops"
                 app:chipCornerRadius="5dp" />
 
@@ -63,6 +65,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
+                android:fontFamily="@font/abeezee"
                 android:text="Arecanut"
                 app:chipCornerRadius="5dp" />
 
@@ -75,6 +78,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
+                android:fontFamily="@font/abeezee"
                 android:text="Coconut"
                 app:chipCornerRadius="5dp" />
 
@@ -87,6 +91,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
+                android:fontFamily="@font/abeezee"
                 android:text="Banana"
                 app:chipCornerRadius="5dp" />
 
@@ -99,6 +104,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
+                android:fontFamily="@font/abeezee"
                 android:text="Pepper"
                 app:chipCornerRadius="5dp" />
 
@@ -111,6 +117,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
+                android:fontFamily="@font/abeezee"
                 android:text="Paddy"
                 app:chipCornerRadius="5dp" />
 
@@ -123,6 +130,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
+                android:fontFamily="@font/abeezee"
                 android:text="Cocca"
                 app:chipCornerRadius="5dp" />
 
