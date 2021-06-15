@@ -6,11 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +50,8 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.content.ContentValues.TAG;
 
 public class Signup extends AppCompatActivity {
     TextView loginText;
@@ -127,35 +133,44 @@ public class Signup extends AppCompatActivity {
                     //setting up dailogbox
                     mLoadingBar = new ProgressDialog(Signup.this);
                     //On form Validates Sucessfully
-                    if (awesomeValidation.validate() && filpath!=null) {
-                        //Initalizing loading bar
-                        mLoadingBar.setTitle("Registration");
-                        mLoadingBar.setMessage("Please Wait");
-                        mLoadingBar.setCanceledOnTouchOutside(false);
-                        mLoadingBar.show();
-                        //get the Details From Frontend
-                        String email = Email.getText().toString();
-                        String password = Password.getText().toString();
-                        authentication.createUserWithEmailAndPassword(email, password)
-                                .addOnCompleteListener(Signup.this, new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (task.isSuccessful()) {
-                                            uploadtofirebase();
-                                            mLoadingBar.dismiss();
-                                            //Redirect to MyFavratious page
-                                            Toast.makeText(Signup.this, "Registraion Sucessfull", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            mLoadingBar.dismiss();
-                                            Toast.makeText(Signup.this, task.getException().getMessage().toString(), Toast.LENGTH_SHORT).show();
+                    if(isconnected(Signup.this))
+                    {
+                        if (awesomeValidation.validate() && filpath != null) {
+                            //Initalizing loading bar
+                            mLoadingBar.setTitle("Registration");
+                            mLoadingBar.setMessage("Please Wait");
+                            mLoadingBar.setCanceledOnTouchOutside(false);
+                            mLoadingBar.show();
+                            //get the Details From Frontend
+                            String email = Email.getText().toString();
+                            String password = Password.getText().toString();
+                            authentication.createUserWithEmailAndPassword(email, password)
+                                    .addOnCompleteListener(Signup.this, new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            if (task.isSuccessful()) {
+                                                uploadtofirebase();
+                                                mLoadingBar.dismiss();
+                                                //Redirect to MyFavratious page
+                                                Toast.makeText(Signup.this, "Registraion Sucessfull", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                mLoadingBar.dismiss();
+                                                Toast.makeText(Signup.this, task.getException().getMessage().toString(), Toast.LENGTH_SHORT).show();
+                                            }
+
                                         }
+                                    });
 
-                                    }
-                                });
+                        } else {
+                            Toast.makeText(Signup.this, "Enter Valid Details/Please ensure imgae is inserted", Toast.LENGTH_SHORT).show();
+                        }
 
-                    } else {
-                        Toast.makeText(Signup.this, "Enter Valid Details/Please ensure imgae is inserted", Toast.LENGTH_SHORT).show();
                     }
+                    else
+                    {
+                        Toast.makeText(Signup.this, "Please Check your internet Connectivity", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             });
 
@@ -235,5 +250,26 @@ public class Signup extends AppCompatActivity {
             break;
         }
         return temp;
+    }
+    private boolean isconnected(Signup splashactivity) {
+        Log.d(TAG, "onClick: 2");
+
+        ConnectivityManager connectivityManager= (ConnectivityManager) splashactivity.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        //Check for Wifi and
+        NetworkInfo wificon= connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mobilecon= connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+        if((wificon!=null && wificon.isConnected())||(mobilecon!=null&&mobilecon.isConnected()))
+        {
+            Log.d(TAG, "onClick: internet on");
+            return true;
+        }
+        else
+        {
+            Log.d(TAG, "onClick: internet off");
+            return false;
+        }
+
     }
 }

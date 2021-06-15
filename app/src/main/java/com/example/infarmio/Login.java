@@ -1,11 +1,17 @@
 package com.example.infarmio;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -48,6 +54,11 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //Check for internet Conectivity
+//        if(!isconnected(Login.this)){
+//            showDailog();
+//        }
+
        //converting xml id to java objects
         loginText=(TextView)findViewById(R.id.Login_redirecttosignup);
         userName=findViewById(R.id.Login_Email);
@@ -69,80 +80,78 @@ public class Login extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(awesomeValidation.validate())
+                if(isconnected(Login.this))
                 {
-                    String username=emailparser(userName.getText().toString());
-                    String password=Password.getText().toString();
-                    progressDialog.setTitle("Signing in");
-                    progressDialog.setMessage("Please Wait");
-                    progressDialog.setCanceledOnTouchOutside(false);
-                    progressDialog.show();
-                    if(checkBox.isChecked())
-                    {
-                        //Login as admin
-                        DatabaseReference Admindb=FirebaseDatabase.getInstance().getReference().child("Admin");
-                        try {
-                            DatabaseReference adminInstance = Admindb.child(username);
-                            adminInstance.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    //Data from backend
-                                    try {
-                                         dbusername = snapshot.child("adminname").getValue().toString();
-                                         dbpassword = snapshot.child("password").getValue().toString();
-                                    }catch (Exception e){
-                                        progressDialog.dismiss();
-                                        Toast.makeText(Login.this, "Invalid Credential", Toast.LENGTH_SHORT).show();
-                                    }
-                                    if (username.equals(dbusername) && password.equals(dbpassword)) {
-                                        progressDialog.dismiss();
-                                        //redirect to the Home page
-                                        Toast.makeText(Login.this, "Login Sucessful as admin", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        progressDialog.dismiss();
-                                        Toast.makeText(Login.this, "Invalid Credential", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(Login.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }catch (Exception e)
-                        {
-                            progressDialog.dismiss();
-                            Toast.makeText(Login.this, "Invalid Credentail", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    else
-                    {
-                        //Login as User
-                        firebaseAuth.signInWithEmailAndPassword(userName.getText().toString(),password)
-                                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    if (awesomeValidation.validate()) {
+                        String username = emailparser(userName.getText().toString());
+                        String password = Password.getText().toString();
+                        progressDialog.setTitle("Signing in");
+                        progressDialog.setMessage("Please Wait");
+                        progressDialog.setCanceledOnTouchOutside(false);
+                        progressDialog.show();
+                        if (checkBox.isChecked()) {
+                            //Login as admin
+                            DatabaseReference Admindb = FirebaseDatabase.getInstance().getReference().child("Admin");
+                            try {
+                                DatabaseReference adminInstance = Admindb.child(username);
+                                adminInstance.addValueEventListener(new ValueEventListener() {
                                     @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if(task.isSuccessful())
-                                        {
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        //Data from backend
+                                        try {
+                                            dbusername = snapshot.child("adminname").getValue().toString();
+                                            dbpassword = snapshot.child("password").getValue().toString();
+                                        } catch (Exception e) {
                                             progressDialog.dismiss();
-                                            Toast.makeText(Login.this, "Login Sucessfull as user", Toast.LENGTH_SHORT).show();
-                                            //redirect to Home page
+                                            Toast.makeText(Login.this, "Invalid Credential", Toast.LENGTH_SHORT).show();
                                         }
-                                        else
-                                        {
+                                        if (username.equals(dbusername) && password.equals(dbpassword)) {
                                             progressDialog.dismiss();
-                                            Toast.makeText(Login.this, "Invalid credential", Toast.LENGTH_SHORT).show();
+                                            //redirect to the Home page
+                                            Toast.makeText(Login.this, "Login Sucessful as admin", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            progressDialog.dismiss();
+                                            Toast.makeText(Login.this, "Invalid Credential", Toast.LENGTH_SHORT).show();
                                         }
+                                    }
 
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(Login.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 });
+                            } catch (Exception e) {
+                                progressDialog.dismiss();
+                                Toast.makeText(Login.this, "Invalid Credentail", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            //Login as User
+                            firebaseAuth.signInWithEmailAndPassword(userName.getText().toString(), password)
+                                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            if (task.isSuccessful()) {
+                                                progressDialog.dismiss();
+                                                Toast.makeText(Login.this, "Login Sucessfull as user", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(Login.this, UserActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            } else {
+                                                progressDialog.dismiss();
+                                                Toast.makeText(Login.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
 
+                                        }
+                                    });
+
+                        }
+                    } else {
+                        Toast.makeText(Login.this, "Please Enter the valid Details", Toast.LENGTH_SHORT).show();
                     }
                 }
-                else
-                    {
-                    Toast.makeText(Login.this, "Please Enter the valid Details", Toast.LENGTH_SHORT).show();
+                else{
+                    Toast.makeText(Login.this, "Check your Internet Conectivity", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -173,5 +182,53 @@ public class Login extends AppCompatActivity {
             break;
         }
         return temp;
+    }
+
+    //Check the internet Connectivity
+    private boolean isconnected(Login splashactivity) {
+        Log.d(TAG, "onClick: 2");
+
+        ConnectivityManager connectivityManager= (ConnectivityManager) splashactivity.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        //Check for Wifi and mobile network
+        NetworkInfo wificon= connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mobilecon= connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+        if((wificon!=null && wificon.isConnected())||(mobilecon!=null&&mobilecon.isConnected()))
+        {
+            Log.d(TAG, "onClick: internet on");
+            return true;
+        }
+        else
+        {
+            Log.d(TAG, "onClick: internet off");
+            return false;
+        }
+
+    }
+
+   //useless
+    private void showDailog() {
+        Log.d(TAG, "onClick: Showing dailog");
+        AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+        builder.setMessage("Please Connect to internet to Proceed Further")
+                .setCancelable(false)
+                .setPositiveButton("Connect", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d(TAG, "onClick: start");
+                        startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                        Log.d(TAG, "onClick: end");
+
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+
     }
 }
