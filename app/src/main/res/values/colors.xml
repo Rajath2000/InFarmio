@@ -12,6 +12,7 @@
     <color name="drak_black">#081C15</color>
     <color name="light_green">#D8F3DC</color>
     <color name="text_color">#1B4332</color>
-
+    <color name="lightgreen">#D8F3DC</color>
+    <color name="darkgreen">#081C15</color>
 
 </resources>
