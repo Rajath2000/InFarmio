@@ -10,7 +10,7 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip4"
+            android:id="@+id/chipItem"
             style="@style/customchipstyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

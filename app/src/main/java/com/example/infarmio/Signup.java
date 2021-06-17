@@ -153,6 +153,9 @@ public class Signup extends AppCompatActivity {
                                                 mLoadingBar.dismiss();
                                                 //Redirect to MyFavratious page
                                                 Toast.makeText(Signup.this, "Registraion Sucessfull", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(Signup.this,favorites_activity.class);
+                                                startActivity(intent);
+                                                finish();
                                             } else {
                                                 mLoadingBar.dismiss();
                                                 Toast.makeText(Signup.this, task.getException().getMessage().toString(), Toast.LENGTH_SHORT).show();

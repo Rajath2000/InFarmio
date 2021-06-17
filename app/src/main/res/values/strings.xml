@@ -4,6 +4,8 @@
     <string name="invalid_password">Password Should not be empty</string>
     <string name="invalid_phone">Enter Valid Phone number</string>
     <string name="not_matching">password and confirmpassword not matching</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
