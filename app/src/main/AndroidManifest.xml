@@ -14,13 +14,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.InFarmio">
-        <activity android:name=".splashActivity"></activity>
+        <activity android:name=".favorites_activity"></activity>
         <activity android:name=".UserActivity" />
         <activity android:name=".Signup" /> <!-- <activity android:name=".Signup"></activity> -->
         <activity android:name=".MainActivity" />
         <activity android:name=".Login" />
         <activity
-            android:name=".favorites_activity"
+            android:name=".splashActivity"
             android:theme="@style/Theme.splashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

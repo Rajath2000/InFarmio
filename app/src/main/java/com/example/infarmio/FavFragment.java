@@ -1,6 +1,7 @@
 package com.example.infarmio;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,12 +37,12 @@ public class FavFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM1 = "Username";
+//    private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public String Username;
+
 
 
 //////////////////////////    Declearing all required variables ///////////////////////////////
@@ -48,12 +50,15 @@ public class FavFragment extends Fragment {
     RecyclerView recyclerView;
     FloatingActionButton floatingActionButton;
     ArrayList<String> favratois;
-    ArrayList<String> userselected;
+    ArrayList<String> myfavratios;
 
-    String Username;
+
 
     DatabaseReference itemInstence;
 
+    ProgressDialog progressDialog;
+    FirebaseAuth firebaseAuth;
+    DatabaseReference userrefrence;
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,7 +81,6 @@ public class FavFragment extends Fragment {
         FavFragment fragment = new FavFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -85,8 +89,7 @@ public class FavFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            Username = getArguments().getString(ARG_PARAM1);
         }
     }
 
@@ -108,57 +111,66 @@ public class FavFragment extends Fragment {
 
         //////////////////Trying with threads////////////////////////////////////
         //Getting favratious list from firebase
+        progressDialog=new ProgressDialog(getContext());
+        progressDialog.setTitle("Loading");
+        progressDialog.setMessage("Please Wait");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
         favratois=new ArrayList<>();
         itemInstence= FirebaseDatabase.getInstance().getReference().child("AllItems");
         itemInstence.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void  onDataChange(@NonNull DataSnapshot snapshot) {
+            @Override
+            public void  onDataChange(@NonNull DataSnapshot snapshot) {
 
-                        for (DataSnapshot data : snapshot.getChildren()) {
-                            String itemName = data.getValue(String.class);
-                            favratois.add(itemName);
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    String itemName = data.getValue(String.class);
+                    favratois.add(itemName);
 
-                        }
+                }
 
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+            }
+        });
 
         //calling adaptorclass
-               FavAdapter myAdapter=new FavAdapter(favratois);
-               new Handler().postDelayed(new Runnable() {
-                   @Override
-                   public void run() {
-                       recyclerView.setAdapter(myAdapter);
-
-                   }
-               },3000);
-
-
+        FavAdapter myAdapter=new FavAdapter(favratois);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog.dismiss();
+                recyclerView.setAdapter(myAdapter);
+            }
+        },8000);
 
 
 
-               //////////////////////////////////////////////////
+
+
+        //////////////////////////////////////////////////
 
         //When User clicks letsgo button
         //list which hods users choice
-        userselected=new ArrayList<>();
+
+        firebaseAuth=FirebaseAuth.getInstance();
+
+        myfavratios=new ArrayList<>();
         //on button action
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             private static final String TAG ="DataFRagment" ;
             @Override
             public void onClick(View v) {
                 //calling function to retrive user choice from adapter class
-                userselected=myAdapter.UserSelectedDetails();
+                myfavratios=myAdapter.UserSelectedDetails();
+                Log.d(TAG, "saving: "+Username);
+               userrefrence=FirebaseDatabase.getInstance().getReference().child("User").child(Username).child("Myfavratious");
+               userrefrence.setValue(myfavratios);
+                Intent intent=new Intent(getContext(),UserActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
 
-                //Debug
-                for (String items:userselected)
-                {
-                    Log.d(TAG, "onClick:  "+items);
-                }
             }
         });
 
@@ -188,5 +200,14 @@ public class FavFragment extends Fragment {
 
         return view;
     }
-}
 
+    public String emailparser(String Email){
+        String temp="";
+        String[] split_email=Email.split("[@]");
+        for(int j=0;j<=split_email.length-1;j++) {
+            temp=split_email[j];
+            break;
+        }
+        return temp;
+    }
+}

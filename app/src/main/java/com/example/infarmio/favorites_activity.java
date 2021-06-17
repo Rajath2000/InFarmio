@@ -1,11 +1,16 @@
 package com.example.infarmio;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 
 public class favorites_activity extends AppCompatActivity {
+    private static final String TAG ="fav_activity" ;
     String Username;
 
 
@@ -17,13 +22,28 @@ public class favorites_activity extends AppCompatActivity {
 
 
 
-        Username="sham2000";
+        Username=getIntent().getStringExtra("Username");
+        Log.d(TAG, "onCreate: "+Username);
 
         //getSupportFragmentManager().beginTransaction().replace(R.id.maincontainer,new DataFragment()).commit();
 
         //calling fragment
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.maincontainer,new FavFragment()).commit();
+        FavFragment favFragment=new FavFragment();
+        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+        Bundle bundle=new Bundle();
+        bundle.putString("Username",Username);
+
+        favFragment.setArguments(bundle);
+
+        fragmentTransaction.replace(R.id.maincontainer,favFragment).commit();
+
+
+
+//        getSupportFragmentManager().beginTransaction().replace(R.id.maincontainer,new FavFragment()).commit();
+
+
+
 
 
     }

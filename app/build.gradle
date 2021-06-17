@@ -62,6 +62,9 @@ dependencies {
     //Storage
     implementation 'com.google.firebase:firebase-firestore:23.0.1'
 
+    //firebase ui
+    implementation 'com.firebaseui:firebase-ui-database:6.3.0'
+
 
     //for loading images glid
     implementation 'com.github.bumptech.glide:glide:4.12.0'

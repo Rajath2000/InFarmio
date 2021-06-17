@@ -14,6 +14,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -150,12 +151,20 @@ public class Signup extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<AuthResult> task) {
                                             if (task.isSuccessful()) {
                                                 uploadtofirebase();
-                                                mLoadingBar.dismiss();
+
+                                                new Handler().postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        mLoadingBar.dismiss();
+                                                        Toast.makeText(Signup.this, "Registraion Sucessfull", Toast.LENGTH_SHORT).show();
+                                                        Intent intent = new Intent(Signup.this,favorites_activity.class);
+                                                        intent.putExtra("Username",emailparser(email));
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+                                                },4000);
                                                 //Redirect to MyFavratious page
-                                                Toast.makeText(Signup.this, "Registraion Sucessfull", Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(Signup.this,favorites_activity.class);
-                                                startActivity(intent);
-                                                finish();
+
                                             } else {
                                                 mLoadingBar.dismiss();
                                                 Toast.makeText(Signup.this, task.getException().getMessage().toString(), Toast.LENGTH_SHORT).show();
