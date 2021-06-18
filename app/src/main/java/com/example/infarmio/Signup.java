@@ -150,19 +150,10 @@ public class Signup extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<AuthResult> task) {
                                             if (task.isSuccessful()) {
-                                                uploadtofirebase();
-
-                                                new Handler().postDelayed(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        mLoadingBar.dismiss();
                                                         Toast.makeText(Signup.this, "Registraion Sucessfull", Toast.LENGTH_SHORT).show();
-                                                        Intent intent = new Intent(Signup.this,favorites_activity.class);
-                                                        intent.putExtra("Username",emailparser(email));
-                                                        startActivity(intent);
-                                                        finish();
-                                                    }
-                                                },4000);
+                                                        mLoadingBar.setMessage("Setting up your account");
+                                                        uploadtofirebase();
+
                                                 //Redirect to MyFavratious page
 
                                             } else {
@@ -234,6 +225,7 @@ public class Signup extends AppCompatActivity {
         FirebaseStorage storage=FirebaseStorage.getInstance();
         StorageReference uploader=storage.getReference(email).child("profileimage");
 
+
         uploader.putFile(filpath)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -245,8 +237,17 @@ public class Signup extends AppCompatActivity {
                                 DatabaseReference UserDb=FirebaseDatabase.getInstance().getReference().child("User");
                                 //Creating the object of USER to upload information
                                 User user=new User(email,password,Myfavratious,phone,uri.toString(),post,spost);
-                                UserDb.child(email).setValue(user);
-
+                                UserDb.child(email).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        mLoadingBar.dismiss();
+                                        Intent intent = new Intent(Signup.this,favorites_activity.class);
+                                        intent.putExtra("Username",Email.getText().toString());
+                                        intent.putExtra("Password",password);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                });
                             }
                         });
                     }

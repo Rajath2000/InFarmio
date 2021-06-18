@@ -11,7 +11,7 @@ import android.util.Log;
 
 public class favorites_activity extends AppCompatActivity {
     private static final String TAG ="fav_activity" ;
-    String Username;
+    String Username,Password;
 
 
 
@@ -23,6 +23,7 @@ public class favorites_activity extends AppCompatActivity {
 
 
         Username=getIntent().getStringExtra("Username");
+        Password=getIntent().getStringExtra("Password");
         Log.d(TAG, "onCreate: "+Username);
 
         //getSupportFragmentManager().beginTransaction().replace(R.id.maincontainer,new DataFragment()).commit();
@@ -33,6 +34,7 @@ public class favorites_activity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
         Bundle bundle=new Bundle();
         bundle.putString("Username",Username);
+        bundle.putString("Password",Password);
 
         favFragment.setArguments(bundle);
 

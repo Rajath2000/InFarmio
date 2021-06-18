@@ -15,7 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,10 +42,11 @@ public class FavFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "Username";
-//    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM2 = "Password";
 
     // TODO: Rename and change types of parameters
     public String Username;
+    public String Password;
 
 
 
@@ -90,6 +95,8 @@ public class FavFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             Username = getArguments().getString(ARG_PARAM1);
+            Password =getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -128,6 +135,49 @@ public class FavFragment extends Fragment {
 
                 }
 
+                //calling adaptorclass
+                FavAdapter myAdapter=new FavAdapter(favratois);
+                progressDialog.dismiss();
+                recyclerView.setAdapter(myAdapter);
+
+                firebaseAuth=FirebaseAuth.getInstance();
+
+                myfavratios=new ArrayList<>();
+                //on button action
+                floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                    private static final String TAG ="DataFRagment" ;
+                    @Override
+                    public void onClick(View v) {
+                        //calling function to retrive user choice from adapter class
+                        myfavratios=myAdapter.UserSelectedDetails();
+                        Log.d(TAG, "saving: "+Username);
+                        Log.d(TAG,"saving"+Password);
+                        userrefrence=FirebaseDatabase.getInstance().getReference().child("User").child(emailparser(Username)).child("Myfavratious");
+                        progressDialog.setTitle("Loging in");
+                        progressDialog.setMessage("Please Wait");
+                        progressDialog.show();
+                        userrefrence.setValue(myfavratios).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                firebaseAuth.signInWithEmailAndPassword(Username,Password)
+                                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                if(task.isSuccessful()) {
+                                                    progressDialog.dismiss();
+                                                    Intent intent = new Intent(getContext(), UserActivity.class);
+                                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                    startActivity(intent);
+                                                }
+                                            }
+                                        });
+                            }
+                        });
+
+
+                    }
+                });
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -135,15 +185,9 @@ public class FavFragment extends Fragment {
             }
         });
 
-        //calling adaptorclass
-        FavAdapter myAdapter=new FavAdapter(favratois);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                progressDialog.dismiss();
-                recyclerView.setAdapter(myAdapter);
-            }
-        },8000);
+
+
+
 
 
 
@@ -154,25 +198,25 @@ public class FavFragment extends Fragment {
         //When User clicks letsgo button
         //list which hods users choice
 
-        firebaseAuth=FirebaseAuth.getInstance();
-
-        myfavratios=new ArrayList<>();
-        //on button action
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            private static final String TAG ="DataFRagment" ;
-            @Override
-            public void onClick(View v) {
-                //calling function to retrive user choice from adapter class
-                myfavratios=myAdapter.UserSelectedDetails();
-                Log.d(TAG, "saving: "+Username);
-               userrefrence=FirebaseDatabase.getInstance().getReference().child("User").child(Username).child("Myfavratious");
-               userrefrence.setValue(myfavratios);
-                Intent intent=new Intent(getContext(),UserActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-
-            }
-        });
+//        firebaseAuth=FirebaseAuth.getInstance();
+//
+//        myfavratios=new ArrayList<>();
+//        //on button action
+//        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+//            private static final String TAG ="DataFRagment" ;
+//            @Override
+//            public void onClick(View v) {
+//                //calling function to retrive user choice from adapter class
+//                myfavratios=myAdapter.UserSelectedDetails();
+//                Log.d(TAG, "saving: "+Username);
+//               userrefrence=FirebaseDatabase.getInstance().getReference().child("User").child(Username).child("Myfavratious");
+//               userrefrence.setValue(myfavratios);
+//                Intent intent=new Intent(getContext(),UserActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(intent);
+//
+//            }
+//        });
 
 
 

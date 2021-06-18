@@ -39,7 +39,7 @@ public class UserActivity extends AppCompatActivity {
         //getting current username detais
         userid.setText(emailparser(mAuth.getCurrentUser().getEmail()));
 
-//displaying image
+       //displaying image
 
 
         progressBar.setVisibility(View.VISIBLE);
