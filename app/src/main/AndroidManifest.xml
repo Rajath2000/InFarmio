@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.InFarmio">
-        <activity android:name=".AdminActivity"></activity>
+        <activity android:name=".FavUpdateActivity"></activity>
+        <activity android:name=".AdminActivity" />
         <activity android:name=".favorites_activity" />
         <activity android:name=".UserActivity" />
         <activity android:name=".Signup" /> <!-- <activity android:name=".Signup"></activity> -->

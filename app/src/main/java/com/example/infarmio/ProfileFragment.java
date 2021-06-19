@@ -228,11 +228,17 @@ public class ProfileFragment extends Fragment {
                         String username;
                         Password=snapshot.child("password").getValue().toString();
                         username=mAuth.getCurrentUser().getEmail();
-                        Intent intent = new Intent(getContext(),favorites_activity.class);
-                        intent.putExtra("Username",username);
-                        intent.putExtra("Password",Password);
-                        startActivity(intent);
+//                        Intent intent = new Intent(getContext(),FavUpdateActivity.class);
+//                        intent.putExtra("Username",username);
+//                        intent.putExtra("Password",Password);
+//  intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        try {
+                            startActivity(new Intent(getActivity(), FavUpdateActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                        }catch (Exception e)
+                        {
 
+                        }
+//                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.post_frame,new FavUpdateFragment()).commit();
                     }
 
                     @Override
