@@ -3,145 +3,107 @@ package com.example.infarmio;
 import java.util.ArrayList;
 
 public class Post {
-    //    String postid;
-    String title;
-    String catagory;
-    String decription;
-    String problem;
-    String method;
-    String usage;
-    String usertips;
-    String contact;
-    ArrayList<String> postImgUrl;
-    String postpdfUrl;
-    int likes;
-    int dislikes;
-    String status;
+    String postid;
+    String profileurl;
+    String username;
+    String Title;
+    String Probem;
+    String Solution;
+    String Catagory;
+    String ContactNumber;
+    String Reference;
+    String Image;
 
-    public Post(String title, String catagory, String decription, String problem, String method, String usage, String usertips, String contact, ArrayList<String> postImgUrl, String postpdfUrl, int likes, int dislikes, String status) {
-        this.title = title;
-        this.catagory = catagory;
-        this.decription = decription;
-        this.problem = problem;
-        this.method = method;
-        this.usage = usage;
-        this.usertips = usertips;
-        this.contact = contact;
-        this.postImgUrl = postImgUrl;
-        this.postpdfUrl = postpdfUrl;
-        this.likes = likes;
-        this.dislikes = dislikes;
-        this.status = status;
+    public Post(String postid, String profileurl, String username, String title, String probem, String solution, String catagory, String contactNumber, String reference, String image) {
+        this.postid = postid;
+        this.profileurl = profileurl;
+        this.username = username;
+        Title = title;
+        Probem = probem;
+        Solution = solution;
+        Catagory = catagory;
+        ContactNumber = contactNumber;
+        Reference = reference;
+        Image = image;
     }
-    //    public String getPostid() {
-//        return postid;
-//    }
-//
-//    public void setPostid(String postid) {
-//        this.postid = postid;
-//    }
+
+    public String getPostid() {
+        return postid;
+    }
+
+    public void setPostid(String postid) {
+        this.postid = postid;
+    }
+
+    public String getProfileurl() {
+        return profileurl;
+    }
+
+    public void setProfileurl(String profileurl) {
+        this.profileurl = profileurl;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getTitle() {
-        return title;
+        return Title;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        Title = title;
+    }
+
+    public String getProbem() {
+        return Probem;
+    }
+
+    public void setProbem(String probem) {
+        Probem = probem;
+    }
+
+    public String getSolution() {
+        return Solution;
+    }
+
+    public void setSolution(String solution) {
+        Solution = solution;
     }
 
     public String getCatagory() {
-        return catagory;
+        return Catagory;
     }
 
     public void setCatagory(String catagory) {
-        this.catagory = catagory;
+        Catagory = catagory;
     }
 
-    public String getDecription() {
-        return decription;
+    public String getContactNumber() {
+        return ContactNumber;
     }
 
-    public void setDecription(String decription) {
-        this.decription = decription;
+    public void setContactNumber(String contactNumber) {
+        ContactNumber = contactNumber;
     }
 
-    public String getProblem() {
-        return problem;
+    public String getReference() {
+        return Reference;
     }
 
-    public void setProblem(String problem) {
-        this.problem = problem;
+    public void setReference(String reference) {
+        Reference = reference;
     }
 
-    public String getMethod() {
-        return method;
+    public String getImage() {
+        return Image;
     }
 
-    public void setMethod(String method) {
-        this.method = method;
-    }
-
-    public String getUsage() {
-        return usage;
-    }
-
-    public void setUsage(String usage) {
-        this.usage = usage;
-    }
-
-    public String getUsertips() {
-        return usertips;
-    }
-
-    public void setUsertips(String usertips) {
-        this.usertips = usertips;
-    }
-
-    public String getContact() {
-        return contact;
-    }
-
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
-
-    public ArrayList<String> getPostImgUrl() {
-        return postImgUrl;
-    }
-
-    public void setPostImgUrl(ArrayList<String> postImgUrl) {
-        this.postImgUrl = postImgUrl;
-    }
-
-    public int getLikes() {
-        return likes;
-    }
-
-    public void setLikes(int likes) {
-        this.likes = likes;
-    }
-
-    public int getDislikes() {
-        return dislikes;
-    }
-
-    public void setDislikes(int dislikes) {
-        this.dislikes = dislikes;
-    }
-
-    public String getPostpdfUrl() {
-        return postpdfUrl;
-    }
-
-    public void setPostpdfUrl(String postpdfUrl) {
-        this.postpdfUrl = postpdfUrl;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setImage(String image) {
+        Image = image;
     }
 }

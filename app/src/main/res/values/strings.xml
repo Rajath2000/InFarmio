@@ -6,6 +6,7 @@
     <string name="not_matching">password and confirmpassword not matching</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="required">This fie;;d is required</string>
 
 
 </resources>
