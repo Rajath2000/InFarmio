@@ -153,7 +153,7 @@ public class FavFragment extends Fragment {
                         Log.d(TAG, "saving: "+Username);
                         Log.d(TAG,"saving"+Password);
                         userrefrence=FirebaseDatabase.getInstance().getReference().child("User").child(emailparser(Username)).child("Myfavratious");
-                        progressDialog.setTitle("Loging in");
+                        progressDialog.setTitle("Saving Changes");
                         progressDialog.setMessage("Please Wait");
                         progressDialog.show();
                         userrefrence.setValue(myfavratios).addOnSuccessListener(new OnSuccessListener<Void>() {
