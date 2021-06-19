@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-<!--    home item-->
+    <!--    home item-->
     <item android:id="@+id/menu_home"
-       android:icon="@drawable/ic_baseline_home_24"
+        android:icon="@drawable/ic_baseline_home_24"
         android:title="Home"/>
 
     <!--    Search item-->
@@ -11,12 +11,13 @@
         android:icon="@drawable/ic_baseline_search_24"
         android:title="Search"/>
     <!--    post item-->
-<!--    <item android:id="@+id/menu_Post"-->
-<!--        android:icon="@drawable/ic_baseline_post_add_24"-->
-<!--        android:title="Post"/>-->
+    <item android:id="@+id/menu_Post"
+        android:icon="@drawable/ic_baseline_post_add_24"
+        android:title="Post"/>
     <!--    profile item-->
     <item android:id="@+id/menu_Profile"
         android:icon="@drawable/ic_baseline_account_circle_24"
         android:title="Profie"/>
+
 
 </menu>

@@ -14,11 +14,17 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class splashActivity extends AppCompatActivity{
@@ -45,18 +51,54 @@ public class splashActivity extends AppCompatActivity{
             public void run() {
                 //Get the current user
                 FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
+
                 if(firebaseUser!=null)
                 {
-                    //if user already not logged
-                    Intent intent = new Intent(splashActivity.this,UserActivity.class);
-                    startActivity(intent);
-                    finish();
+                    String user=firebaseAuth.getCurrentUser().getEmail();
+                    DatabaseReference Admindb = FirebaseDatabase.getInstance().getReference().child("Admin");
+                    DatabaseReference adminInstance = Admindb.child(emailparser(user));
+                    adminInstance.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            try {
+                                String dbuser=snapshot.child("adminname").getValue().toString();
+
+                                //if user already not logged
+                                Intent intent = new Intent(splashActivity.this,AdminActivity.class);
+                                startActivity(intent);
+                                finish();
+
+                            }
+                            catch (Exception e)
+                            {
+
+                                //if user already not logged
+                                Intent intent = new Intent(splashActivity.this,UserActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }else {
                     //if user alredy ogged
                     Intent intent = new Intent(splashActivity.this, Login.class);
                     startActivity(intent);
                     finish();
                 }
+            }
+            public String emailparser(String Email){
+                String temp="";
+                String[] split_email=Email.split("[@]");
+                for(int j=0;j<=split_email.length-1;j++) {
+                    temp=split_email[j];
+                    break;
+                }
+                return temp;
             }
 
         },SPLASH_SCREEN_TIMEOUT);

@@ -1,20 +1,15 @@
 package com.example.infarmio;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -27,12 +22,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.InputStream;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class UserActivity extends AppCompatActivity {
-    FirebaseAuth mAuth;
+public class AdminActivity extends AppCompatActivity {
+
     TextView userid;
     BottomNavigationView bottomNavigationView;
     ProgressDialog progressDialog;
@@ -42,18 +35,18 @@ public class UserActivity extends AppCompatActivity {
     HelpingMethods helpingMethods;
     ProgressBar progressBar;
     String Username,Url;
-
-
+    FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user);
-        //loading by default fragment
-        getSupportFragmentManager().beginTransaction().replace(R.id.post_frame,new HomeFragment()).commit();
+        setContentView(R.layout.activity_admin);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.post_frame,new HomeFragmentAdmin()).commit();
 
 
         userid=findViewById(R.id.user_id);
         imageView=findViewById(R.id.profile_image);
+
 
         //Getting user details
         mAuth = FirebaseAuth.getInstance();
@@ -62,13 +55,13 @@ public class UserActivity extends AppCompatActivity {
         Username=emailparser(mAuth.getCurrentUser().getEmail());
 
 
-        databaseReference= FirebaseDatabase.getInstance().getReference().child("User").child(Username);
+        databaseReference= FirebaseDatabase.getInstance().getReference().child("Admin").child(Username);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Url=snapshot.child("profileurl").getValue().toString();
                 try {
-                    Glide.with(UserActivity.this).asBitmap().load(Url).into(imageView);
+                    Glide.with(AdminActivity.this).asBitmap().load(Url).into(imageView);
                 }
                 catch (Exception e)
                 {
@@ -88,47 +81,21 @@ public class UserActivity extends AppCompatActivity {
 
 
 
-//
-//        progressDialog=new ProgressDialog(UserActivity.this);
-//        helpingMethods=new HelpingMethods();
-//
 
-//
-//       //displaying image
-//
-//
-//        progressBar.setVisibility(View.VISIBLE);
-//        Glide.with(this).asBitmap().load("https://firebasestorage.googleapis.com/v0/b/infarmio.appspot.com/o/Himanshu2000%2Fprofileimage?alt=media&token=da62a4b9-678c-42ff-8286-2782f22d4cbc").into(imageView);
-//        progressBar.setVisibility(View.GONE);
-//
-//
-//
-//
-//
-//        //sign out
-//        logout=findViewById(R.id.Logout);
+
+
+
+
+
 //        logout.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                progressDialog.setTitle("Signing out");
-//                progressDialog.setMessage("Please Wait");
-//                progressDialog.setCanceledOnTouchOutside(false);
-//                progressDialog.show();
 //                FirebaseAuth.getInstance().signOut();
-//                progressDialog.dismiss();
-//                Intent intent=new Intent(UserActivity.this,Login.class);
+//                Intent intent=new Intent(AdminActivity.this,Login.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 //                startActivity(intent);
-//                finish();
 //            }
 //        });
-//
-
-
-
-
-
-
-
 
 
         //////////////////////Navigation Action///////////////////////////////////
@@ -140,11 +107,13 @@ public class UserActivity extends AppCompatActivity {
                 switch (item.getItemId())
                 {
 
-                    case R.id.menu_home:temp=new HomeFragment();
+                    case R.id.menu_home:temp=new HomeFragmentAdmin();
                         break;
                     case R.id.menu_Search:temp=new SearchFragment();
                         break;
-                    case R.id.menu_Profile:temp=new ProfileFragment();
+                    case R.id.menu_Post:temp=new PostFragmentAdmin();
+                        break;
+                    case R.id.menu_Profile:temp=new ProfileFragmentAdmin();
                         break;
 
                 }
@@ -154,8 +123,9 @@ public class UserActivity extends AppCompatActivity {
         });
 
         ///////////////////////////////////////////////////////////////////////////
-    }
 
+
+    }
 
 
     public String emailparser(String Email){
@@ -167,7 +137,5 @@ public class UserActivity extends AppCompatActivity {
         }
         return temp;
     }
-
-
 
 }
