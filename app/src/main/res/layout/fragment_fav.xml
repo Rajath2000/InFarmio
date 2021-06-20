@@ -7,7 +7,7 @@
     tools:context=".FavFragment">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/card_username"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:fontFamily="@font/abeezee"

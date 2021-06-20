@@ -5,10 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragmentAdmin">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/review"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Admin Home" />
-
+        android:layout_height="match_parent" />
 </FrameLayout>
