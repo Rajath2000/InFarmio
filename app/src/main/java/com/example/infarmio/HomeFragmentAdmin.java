@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 /**
@@ -71,10 +72,10 @@ public class HomeFragmentAdmin extends Fragment {
 
         review = view.findViewById(R.id.review);
         review.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        String Username= FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         FirebaseRecyclerOptions<postmodel> options=new FirebaseRecyclerOptions.Builder<postmodel>()
-                .setQuery(FirebaseDatabase.getInstance().getReference().child("Post"),postmodel.class).build();
+                .setQuery(FirebaseDatabase.getInstance().getReference().child("Admin").child(emailparser(Username)).child("post"),postmodel.class).build();
 
 
         adapter=new CardAdapter(options);
@@ -93,5 +94,15 @@ public class HomeFragmentAdmin extends Fragment {
     public void onStop() {
         super.onStop();
         adapter.stopListening();
+    }
+
+    public String emailparser(String Email){
+        String temp="";
+        String[] split_email=Email.split("[@]");
+        for(int j=0;j<=split_email.length-1;j++) {
+            temp=split_email[j];
+            break;
+        }
+        return temp;
     }
 }
