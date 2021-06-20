@@ -91,42 +91,43 @@ public class Login extends AppCompatActivity {
                         progressDialog.show();
                         if (checkBox.isChecked()) {
                             //Login as admin
-                            DatabaseReference Admindb = FirebaseDatabase.getInstance().getReference().child("Admin");
-                            try {
-                                DatabaseReference adminInstance = Admindb.child(username);
+                              DatabaseReference Admindb = FirebaseDatabase.getInstance().getReference().child("Admin");
+                                DatabaseReference adminInstance = Admindb.child(username).child("adminname");
                                 adminInstance.addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         //Data from backend
-                                        try {
-                                            dbusername = snapshot.child("adminname").getValue().toString();
-                                            dbpassword = snapshot.child("password").getValue().toString();
-                                        } catch (Exception e) {
-                                            progressDialog.dismiss();
-                                            Toast.makeText(Login.this, "Invalid Credential", Toast.LENGTH_SHORT).show();
-                                        }
-                                        if (username.equals(dbusername) && password.equals(dbpassword)) {
-                                            firebaseAuth.signInWithEmailAndPassword(userName.getText().toString(),password)
-                                                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<AuthResult> task) {
-                                                            if(task.isSuccessful())
-                                                            {
-                                                                progressDialog.dismiss();
-                                                                //redirect to the Home page
-                                                                Toast.makeText(Login.this, "Login Sucessful as admin", Toast.LENGTH_SHORT).show();
-                                                                Intent intent = new Intent(Login.this, AdminActivity.class);
-                                                                startActivity(intent);
-                                                                finish();
+                                        try{
+                                            dbusername=snapshot.getValue().toString();
+                                            if (dbusername!=null) {
+                                                firebaseAuth.signInWithEmailAndPassword(userName.getText().toString(),password)
+                                                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                                if(task.isSuccessful())
+                                                                {
+                                                                    progressDialog.dismiss();
+                                                                    //redirect to the Home page
+//                                                                Toast.makeText(Login.this, "Login Sucessful as admin", Toast.LENGTH_SHORT).show();
+                                                                    Intent intent = new Intent(Login.this, AdminActivity.class);
+                                                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                                    startActivity(intent);
+
+                                                                }
                                                             }
-                                                        }
-                                                    });
+                                                        });
 
 
-                                        } else {
+                                            } else {
+                                                progressDialog.dismiss();
+                                                Toast.makeText(Login.this, "Invalid Credential", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }catch (Exception e)
+                                        {
                                             progressDialog.dismiss();
                                             Toast.makeText(Login.this, "Invalid Credential", Toast.LENGTH_SHORT).show();
                                         }
+
                                     }
 
                                     @Override
@@ -135,10 +136,7 @@ public class Login extends AppCompatActivity {
                                         Toast.makeText(Login.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 });
-                            } catch (Exception e) {
-                                progressDialog.dismiss();
-                                Toast.makeText(Login.this, "Invalid Credentail", Toast.LENGTH_SHORT).show();
-                            }
+
                         } else {
                             //Login as User
                             progressDialog.setTitle("Signing in");
@@ -146,38 +144,44 @@ public class Login extends AppCompatActivity {
                             progressDialog.setCanceledOnTouchOutside(false);
                             progressDialog.show();
                             DatabaseReference Admindb = FirebaseDatabase.getInstance().getReference().child("User");
-                            DatabaseReference userInstence = Admindb.child(username);
+                            DatabaseReference userInstence = Admindb.child(username).child("username");
                             userInstence.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     try {
-                                        dbusername = snapshot.child("username").getValue().toString();
-                                        dbpassword = snapshot.child("password").getValue().toString();
-                                        if (dbusername!=null && dbpassword!=null){
-                                            firebaseAuth.signInWithEmailAndPassword(userName.getText().toString(), password)
-                                                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<AuthResult> task) {
-                                                            if (task.isSuccessful()) {
-                                                                progressDialog.dismiss();
-                                                                Toast.makeText(Login.this, "Login Sucessfull as user", Toast.LENGTH_SHORT).show();
-                                                                Intent intent = new Intent(Login.this, UserActivity.class);
-                                                                startActivity(intent);
-                                                                finish();
-                                                            } else {
-                                                                progressDialog.dismiss();
-                                                                Toast.makeText(Login.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        dbusername = snapshot.getValue().toString();
+                                        if(dbusername!=null)
+                                        {
+                                            try {
+                                                firebaseAuth.signInWithEmailAndPassword(userName.getText().toString(), password)
+                                                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                                if (task.isSuccessful()) {
+                                                                    progressDialog.dismiss();
+//                                                                Toast.makeText(Login.this, "Login Sucessfull as user", Toast.LENGTH_SHORT).show();
+                                                                    Intent intent = new Intent(Login.this, UserActivity.class);
+                                                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                                    startActivity(intent);
+                                                                } else {
+                                                                    progressDialog.dismiss();
+                                                                    Toast.makeText(Login.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                                }
+
                                                             }
+                                                        });
 
-                                                        }
-                                                    });
 
+                                            } catch (Exception e) {
+                                                progressDialog.dismiss();
+                                                Toast.makeText(Login.this, "Invalid Credential", Toast.LENGTH_SHORT).show();
+                                            }
                                         }
-                                    } catch (Exception e) {
+                                    }catch (Exception e)
+                                    {
                                         progressDialog.dismiss();
-                                        Toast.makeText(Login.this, "Invalid Credential", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Login.this, "Inavlid credentail", Toast.LENGTH_SHORT).show();
                                     }
-
                                 }
 
                                 @Override
@@ -185,8 +189,6 @@ public class Login extends AppCompatActivity {
 
                                 }
                             });
-
-
                         }
                     } else {
                         Toast.makeText(Login.this, "Please Enter the valid Details", Toast.LENGTH_SHORT).show();
