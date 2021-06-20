@@ -1,5 +1,7 @@
 package com.example.infarmio;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -128,6 +130,24 @@ public class CardExpanded extends Fragment {
         Solution.setText(solution);
         Contact.setText(contactNumber);
         References.setText(reference);
+
+
+        Contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+Contact.getText().toString()));
+                getContext().startActivity(i);
+            }
+        });
+
+        References.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(References.getText().toString()));
+                getContext().startActivity(i);
+            }
+        });
 
 
         return  view;
