@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -37,6 +38,27 @@ public class CardAdapter extends FirebaseRecyclerAdapter<postmodel,CardAdapter.m
         holder.card_catagory.setText(model.getCatagory());
         Glide.with(holder.card_image.getContext()).load(model.getImage()).into(holder.card_image);
         Glide.with(holder.card_img.getContext()).load(model.getProfileurl()).into(holder.card_img);
+
+        holder.card_parent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppCompatActivity activity=(AppCompatActivity)v.getContext();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.post_frame,new CardExpanded(
+                        model.getCatagory(),
+                        model.getContactNumber(),
+                        model.getImage(),
+                        model.getPostid(),
+                        model.getProbem(),
+                        model.getProfileurl(),
+                        model.getReference(),
+                        model.getSolution(),
+                        model.getTitle(),
+                        model.getUsername()
+                        )).addToBackStack(null).commit();
+            }
+        });
+
+
 
     }
 

@@ -53,10 +53,6 @@ public class AdminActivity extends AppCompatActivity {
 
         // getting current username detais
         Username=emailparser(mAuth.getCurrentUser().getEmail());
-
-
-
-
         databaseReference= FirebaseDatabase.getInstance().getReference().child("Admin").child(Username).child("profileurl");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
