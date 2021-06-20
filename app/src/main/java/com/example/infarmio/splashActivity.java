@@ -65,6 +65,7 @@ public class splashActivity extends AppCompatActivity{
 
                                 //if user already not logged
                                 Intent intent = new Intent(splashActivity.this,AdminActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
                                 finish();
 
@@ -74,6 +75,7 @@ public class splashActivity extends AppCompatActivity{
 
                                 //if user already not logged
                                 Intent intent = new Intent(splashActivity.this,UserActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
                                 finish();
                             }

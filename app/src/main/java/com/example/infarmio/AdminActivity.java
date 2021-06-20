@@ -55,11 +55,13 @@ public class AdminActivity extends AppCompatActivity {
         Username=emailparser(mAuth.getCurrentUser().getEmail());
 
 
-        databaseReference= FirebaseDatabase.getInstance().getReference().child("Admin").child(Username);
+
+
+        databaseReference= FirebaseDatabase.getInstance().getReference().child("Admin").child(Username).child("profileurl");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Url=snapshot.child("profileurl").getValue().toString();
+                Url=snapshot.getValue().toString();
                 try {
                     Glide.with(AdminActivity.this).asBitmap().load(Url).into(imageView);
                 }

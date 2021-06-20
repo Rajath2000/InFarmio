@@ -108,10 +108,11 @@ public class Login extends AppCompatActivity {
                                                                 {
                                                                     progressDialog.dismiss();
                                                                     //redirect to the Home page
-//                                                                Toast.makeText(Login.this, "Login Sucessful as admin", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Login.this, "Login Sucessful as admin", Toast.LENGTH_SHORT).show();
                                                                     Intent intent = new Intent(Login.this, AdminActivity.class);
                                                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                                                     startActivity(intent);
+                                                                    finish();
 
                                                                 }
                                                             }

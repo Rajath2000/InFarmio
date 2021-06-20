@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
@@ -101,7 +102,7 @@ public class ProfileFragmentAdmin extends Fragment {
     CircleImageView imageView;
     TextView username;
     TextInputEditText phone;
-    DatabaseReference databaseReference;
+    DatabaseReference profileInstence,phoneInstence;
     String Url;
     String Phone;
     Uri filpath;
@@ -130,12 +131,13 @@ public class ProfileFragmentAdmin extends Fragment {
 
 
 
-        databaseReference= FirebaseDatabase.getInstance().getReference().child("Admin").child(Username);
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        profileInstence= FirebaseDatabase.getInstance().getReference().child("Admin").child(Username).child("profileurl");
+        phoneInstence= FirebaseDatabase.getInstance().getReference().child("Admin").child(Username).child("phoneNumber");
+
+        profileInstence.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Url=snapshot.child("profileurl").getValue().toString();
-                Phone=snapshot.child("phoneNumber").getValue().toString();
+                Url=snapshot.getValue().toString();
                 try {
                     Glide.with(getContext()).asBitmap().load(Url).into(imageView);
                 }catch (Exception e)
@@ -143,6 +145,18 @@ public class ProfileFragmentAdmin extends Fragment {
 
                 }
                 username.setText(Username);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        phoneInstence.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Phone=snapshot.getValue().toString();
                 phone.setText(Phone);
             }
 
@@ -303,13 +317,14 @@ public class ProfileFragmentAdmin extends Fragment {
                                 //FirebaseDatabase Objects
                                 DatabaseReference UserDb = FirebaseDatabase.getInstance().getReference().child("Admin");
 
+
                                 //Creating the object of USER to upload information
                                 Log.d(TAG, "onSuccess: " + uri);
                                 UserDb.child(Username).child("profileurl").setValue(uri.toString());
                                 UserDb.child(Username).child("phoneNumber").setValue(Phone).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        progressDialog.dismiss();
+                                           progressDialog.dismiss();
                                     }
                                 });
                             }
@@ -322,23 +337,23 @@ public class ProfileFragmentAdmin extends Fragment {
 
     private void uploadtofirebaseonlyphone()
     {
-        //get the Details From Frontend
-        progressDialog=new ProgressDialog(getContext());
+        ProgressDialog progressDialog=new ProgressDialog(getContext());
         progressDialog.setTitle("Saving Changes");
         progressDialog.setMessage("please wait");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
+        //get the Details From Frontend
         String Phone=phone.getText().toString();
         String Username=emailparser(mAuth.getCurrentUser().getEmail());
 
-        DatabaseReference UserDb = FirebaseDatabase.getInstance().getReference().child("Admin");
-        UserDb.child(Username).child("phoneNumber").setValue(Phone).addOnSuccessListener(new OnSuccessListener<Void>() {
+        DatabaseReference UserDb = FirebaseDatabase.getInstance().getReference().child("Admin").child(Username).child("phoneNumber");
+        UserDb.setValue(Phone).addOnSuccessListener(new OnSuccessListener<Void>() {
             private static final String TAG = "added";
-
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d(TAG, "onSuccess: ");
                 progressDialog.dismiss();
+
             }
         });
 
