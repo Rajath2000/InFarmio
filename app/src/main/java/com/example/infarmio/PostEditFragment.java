@@ -5,15 +5,14 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,10 +24,10 @@ import android.widget.Toast;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
+import com.bumptech.glide.Glide;
 import com.github.siyamed.shapeimageview.RoundedImageView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,28 +44,67 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.concurrent.TimeUnit;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link PostFragmentAdmin#newInstance} factory method to
+ * Use the {@link PostEditFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PostFragmentAdmin extends Fragment {
+public class PostEditFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static final String TAG = "uploade";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public PostFragmentAdmin() {
+    String catagory;
+    String contactNumber;
+    String image;
+    String postid;
+    String probem;
+    String profileurl;
+    String reference;
+    String solution;
+    String title;
+    String username;
+
+    ProgressDialog progressDialog;
+
+
+    AwesomeValidation awesomeValidation;
+
+    public PostEditFragment() {
         // Required empty public constructor
+    }
+
+    public PostEditFragment(
+            String catagory,
+            String contactNumber,
+            String image,
+            String postid,
+            String probem,
+            String profileurl,
+            String reference,
+            String solution,
+            String title,
+            String username) {
+
+        this.catagory=catagory;
+        this.contactNumber=contactNumber;
+        this.image=image;
+        this.postid=postid;
+        this.probem=probem;
+        this.profileurl=profileurl;
+        this.reference=reference;
+        this.solution=solution;
+        this.title=title;
+        this.username=username;
+
+
     }
 
     /**
@@ -75,11 +113,11 @@ public class PostFragmentAdmin extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment PostFragmentAdmin.
+     * @return A new instance of fragment PostEditFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PostFragmentAdmin newInstance(String param1, String param2) {
-        PostFragmentAdmin fragment = new PostFragmentAdmin();
+    public static PostEditFragment newInstance(String param1, String param2) {
+        PostEditFragment fragment = new PostEditFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -97,66 +135,58 @@ public class PostFragmentAdmin extends Fragment {
     }
 
 
-    EditText Title;
-    EditText Symtomps;
-    EditText Solution;
-    EditText ContactNumber;
-    EditText References;
-    Button Browse;
+
+    EditText Post_title;
+    EditText post_symtoms;
+    EditText post_soution;
+    EditText post_ContactNumber;
+    EditText post_refernces;
+    RoundedImageView post_image;
     Button Submit;
-    RoundedImageView imageView;
-    AwesomeValidation awesomeValidation;
-    ProgressDialog progressDialog;
-
-
-    String Catagory;
-    int PostCount;
-    String ProfileUrl;
-
-    String postid;
-    String profileurl;
-    String username;
-    String title;
-    String problem;
-    String soution;
-    String catagory;
-    String contact;
-    String references;
-    String image;
-    DatabaseReference postcountReference;
-    FirebaseStorage storage;
-    StorageReference uploader;
-    String uniquepostid;
-
-
+    Button Browse;
 
 
     Uri filpath;
     Bitmap bitmap;
+
+
+
+
+    FirebaseStorage storage;
+    StorageReference uploader;
+    String uniquepostid;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_post_admin, container, false);
+        View view = inflater.inflate(R.layout.fragment_post_edit, container, false);
+        Post_title=view.findViewById(R.id.Post_title);
+         post_symtoms=view.findViewById(R.id.post_symtoms);
+        post_soution=view.findViewById(R.id.post_soution);
+        post_ContactNumber=view.findViewById(R.id.post_ContactNumber);
+         post_refernces=view.findViewById(R.id.post_refernces);
+         post_image=view.findViewById(R.id.post_image);
+         Submit=view.findViewById(R.id.post_submit);
+         Browse=view.findViewById(R.id.post_browse);
 
-        Title=view.findViewById(R.id.Post_title);
-        Symtomps=view.findViewById(R.id.post_symtoms);
-        Solution=view.findViewById(R.id.post_soution);
-        ContactNumber=view.findViewById(R.id.post_ContactNumber);
-        References=view.findViewById(R.id.post_refernces);
-        Browse=view.findViewById(R.id.post_browse);
-        Submit=view.findViewById(R.id.post_submit);
-        imageView=view.findViewById(R.id.post_image);
 
+
+        Post_title.setText(title);
+        post_symtoms.setText(probem);
+        post_soution.setText(solution);
+        post_ContactNumber.setText(contactNumber);
+        post_refernces.setText(reference);
+        Glide.with(getContext()).load(image).into(post_image);
 
         awesomeValidation=new AwesomeValidation(ValidationStyle.BASIC);
 
 
-        awesomeValidation.addValidation(getActivity(),R.id.Post_title,RegexTemplate.NOT_EMPTY,R.string.required);
+        awesomeValidation.addValidation(getActivity(),R.id.Post_title, RegexTemplate.NOT_EMPTY,R.string.required);
         awesomeValidation.addValidation(getActivity(),R.id.post_symtoms, RegexTemplate.NOT_EMPTY,R.string.required);
         awesomeValidation.addValidation(getActivity(),R.id.post_soution, RegexTemplate.NOT_EMPTY,R.string.required);
         awesomeValidation.addValidation(getActivity(),R.id.post_ContactNumber, "[5-9]{1}[0-9]{9}$",R.string.invalid_phone);
         awesomeValidation.addValidation(getActivity(),R.id.post_refernces, RegexTemplate.NOT_EMPTY,R.string.required);
+
 
 
         Browse.setOnClickListener(new View.OnClickListener() {
@@ -192,52 +222,30 @@ public class PostFragmentAdmin extends Fragment {
                         }).check();
             }
         });
-
-
-       Submit.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               if(awesomeValidation.validate()&& filpath!=null && validate() )
-               {
-                   uploadtofirebase(filpath);
-               }
-               else
-               {
-                   Toast.makeText(getActivity(), "please enter the valid Details/ensure that image is inserted", Toast.LENGTH_SHORT).show();
-               }
-           }
-       });
+        Submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(awesomeValidation.validate()&& filpath!=null && validate() )
+                {
+                    uploadtofirebase(filpath);
+                }
+                else
+                {
+                    Toast.makeText(getActivity(), "please enter the valid Details/ensure that image is inserted", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
 
         return view;
     }
-
-    //rendering selected image from galary
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode==1 && resultCode==getActivity().RESULT_OK)
-        {
-            filpath=data.getData();
-            try{
-                InputStream inputStream=getActivity().getContentResolver().openInputStream(filpath);
-                bitmap= BitmapFactory.decodeStream(inputStream);
-                imageView.setImageBitmap(bitmap);
-            }catch (Exception e)
-            {
-
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-
     public boolean validate()
     {
-        if( Title.getText().length()==0||
-         Symtomps.getText().length()==0||
-         Solution.getText().length()==0||
-         ContactNumber.getText().length()==0||
-         References.getText().length()==0)
+        if( Post_title.getText().length()==0||
+                post_symtoms.getText().length()==0||
+                post_soution.getText().length()==0||
+                post_ContactNumber.getText().length()==0||
+                post_refernces.getText().length()==0)
         {
             return false;
         }
@@ -247,14 +255,29 @@ public class PostFragmentAdmin extends Fragment {
         }
 
     }
+    //rendering selected image from galary
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode==1 && resultCode==getActivity().RESULT_OK)
+        {
+            filpath=data.getData();
+            try{
+                InputStream inputStream=getActivity().getContentResolver().openInputStream(filpath);
+                bitmap= BitmapFactory.decodeStream(inputStream);
+                post_image.setImageBitmap(bitmap);
+            }catch (Exception e)
+            {
+
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     private void uploadtofirebase(Uri filpath)
     {
         String Username;
 //        final int postcount=0;
         //get the Details From Frontend
-
-
 
         progressDialog=new ProgressDialog(getContext());
         progressDialog.setTitle("Saving Changes");
@@ -263,51 +286,12 @@ public class PostFragmentAdmin extends Fragment {
         progressDialog.show();
 
         //getting requried detais
-        Username=FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        Username= FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
-
-        DatabaseReference catagoryReference=FirebaseDatabase.getInstance().getReference().child("Admin").child(emailparser(Username)).child("catagory");
-        DatabaseReference profileurlReference=FirebaseDatabase.getInstance().getReference().child("Admin").child(emailparser(Username)).child("profileurl");
-
-
-
-        //getting the prereqisits details from firebase
-        profileurlReference.addValueEventListener(new ValueEventListener() {
-            private static final String TAG = "Data";
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ProfileUrl=snapshot.getValue().toString();
-                Log.d(TAG, "onDataChange: "+profileurl);
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        catagoryReference.addValueEventListener(new ValueEventListener() {
-            private static final String TAG = "Data";
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Catagory=snapshot.getValue().toString();
-                Log.d(TAG, "onDataChange: "+Catagory);
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-
-      uniquepostid=getuniqueid();
 
         //FireStore object
-        storage=FirebaseStorage.getInstance();
-        uploader=storage.getReference(emailparser(Username)).child("post"+uniquepostid);
+        storage= FirebaseStorage.getInstance();
+        uploader=storage.getReference(username).child("post"+postid);
         uploader.putFile(filpath)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -319,20 +303,19 @@ public class PostFragmentAdmin extends Fragment {
                             public void onSuccess(Uri uri) {
                                 //FirebaseDatabase Objects
                                 try {
-                                    DatabaseReference adminInstance = FirebaseDatabase.getInstance().getReference().child("Admin").child(emailparser(Username)).child("post").child("post" + uniquepostid);
-                                    DatabaseReference postDb = FirebaseDatabase.getInstance().getReference().child("Post").child("post"+uniquepostid);
+                                    DatabaseReference adminInstance = FirebaseDatabase.getInstance().getReference().child("Admin").child(username).child("post").child("post" + postid);
+                                    DatabaseReference postDb = FirebaseDatabase.getInstance().getReference().child("Post").child("post"+postid);
                                     //Creating the object of admin to upload information
-                                    postid=uniquepostid;
-                                    profileurl=ProfileUrl;
-                                    username=emailparser(Username);
-                                    title=Title.getText().toString();
-                                    problem=Symtomps.getText().toString();
-                                    soution=Solution.getText().toString();
-                                    catagory=Catagory;
-                                    contact=ContactNumber.getText().toString();
-                                    references=References.getText().toString();
+//                                    postid=postid;
+//                                    profileurl=profileurl;
+//                                    username=username;
+                                    title=Post_title.getText().toString();
+                                    probem=post_symtoms.getText().toString();
+                                    solution=post_soution.getText().toString();
+                                    contactNumber=post_ContactNumber.getText().toString();
+                                    reference=post_refernces.getText().toString();
                                     image=uri.toString();
-                                    Post post=new Post(postid,profileurl,username,title,problem,soution,catagory,contact,references,image);
+                                    Post post=new Post(postid,profileurl,username,title,probem,solution,catagory,contactNumber,reference,image);
                                     adminInstance.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
@@ -359,21 +342,26 @@ public class PostFragmentAdmin extends Fragment {
 
     }
 
-    public String emailparser(String Email){
-        String temp="";
-        String[] split_email=Email.split("[@]");
-        for(int j=0;j<=split_email.length-1;j++) {
-            temp=split_email[j];
-            break;
-        }
-        return temp;
-    }
 
 
-    public String getuniqueid()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void onBackpressed()
     {
-       return String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
+        AppCompatActivity activity=(AppCompatActivity)getContext();
+        activity.getSupportFragmentManager().beginTransaction().replace(R.id.post_frame,new HomeFragment()).addToBackStack(null).commit();
     }
-
-
 }

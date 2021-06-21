@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.github.siyamed.shapeimageview.RoundedImageView;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -119,6 +120,7 @@ public class CardExpanded extends Fragment {
         TextView Solution=view.findViewById(R.id.expanded_solution);
         TextView Contact=view.findViewById(R.id.expanded_contact);
         TextView References=view.findViewById(R.id.expanded_reference);
+        FloatingActionButton Editmode=view.findViewById(R.id.expanded_card_editmode);
 
 
         Glide.with(getContext()).load(profileurl).into(profileImage);
@@ -131,6 +133,26 @@ public class CardExpanded extends Fragment {
         Contact.setText(contactNumber);
         References.setText(reference);
 
+
+        Editmode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppCompatActivity activity=(AppCompatActivity)getContext();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.post_frame,new PostEditFragment(
+                         catagory,
+                         contactNumber,
+                         image,
+                         postid,
+                         probem,
+                         profileurl,
+                         reference,
+                         solution,
+                         title,
+                         username
+                )).addToBackStack(null).commit();
+
+            }
+        });
 
         Contact.setOnClickListener(new View.OnClickListener() {
             @Override

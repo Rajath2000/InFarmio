@@ -106,7 +106,7 @@ public class CardExpandedUser extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_card_expanded, container, false);
+        View view = inflater.inflate(R.layout.fragment_card_expanded_user, container, false);
         CircleImageView profileImage=view.findViewById(R.id.expanded_profile_img);
         TextView Username=view.findViewById(R.id.expanded_username);
         Chip Catagory=view.findViewById(R.id.expanded_catagory);
