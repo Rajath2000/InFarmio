@@ -158,9 +158,6 @@ public class FavUpdateFragment extends Fragment {
                                 Toast.makeText(getActivity(), "Updated Sucessfully", Toast.LENGTH_SHORT).show();
 //                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.post_frame,new ProfileFragment()).commit();
                                 startActivity(new Intent(getActivity(), UserActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
-
-
-
                             }
                         });
 
@@ -207,29 +204,6 @@ public class FavUpdateFragment extends Fragment {
 //
 //            }
 //        });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
