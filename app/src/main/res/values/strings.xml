@@ -7,6 +7,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="required">This fie;;d is required</string>
+    <string name="invalid_email_forget">Please Enter Valid Email Adress for Reset Password</string>
 
 
 </resources>

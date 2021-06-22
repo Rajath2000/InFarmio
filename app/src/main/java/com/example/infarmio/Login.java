@@ -25,6 +25,7 @@ import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
@@ -39,7 +40,7 @@ import static android.content.ContentValues.TAG;
 
 public class
 Login extends AppCompatActivity {
-    TextView loginText;
+    TextView loginText,ForgetPassword;
     TextInputEditText userName,Password;
     Button login;
     CheckBox checkBox;
@@ -47,6 +48,7 @@ Login extends AppCompatActivity {
 
     //declaring formvalidator objrct
     AwesomeValidation awesomeValidation;
+    AwesomeValidation ForgetPasswordValidation;
 
     FirebaseAuth firebaseAuth;
     ProgressDialog progressDialog;
@@ -67,16 +69,20 @@ Login extends AppCompatActivity {
         Password=findViewById(R.id.Login_password);
         login=findViewById(R.id.Login_Button);
         checkBox=findViewById(R.id.Login_checkadmin);
+        ForgetPassword=findViewById(R.id.Forget_Password);
 
         //initalizing formvalidator objrct
         firebaseAuth=FirebaseAuth.getInstance();
         progressDialog=new ProgressDialog(Login.this);
         //adding the style for validation
         awesomeValidation=new AwesomeValidation(ValidationStyle.TEXT_INPUT_LAYOUT);
+        ForgetPasswordValidation=new AwesomeValidation(ValidationStyle.TEXT_INPUT_LAYOUT);
 
         //add validation for Email
         awesomeValidation.addValidation(this,R.id.layout_email, Patterns.EMAIL_ADDRESS,R.string.invalid_email);
         awesomeValidation.addValidation(this,R.id.layout_password, RegexTemplate.NOT_EMPTY,R.string.invalid_password);
+
+        ForgetPasswordValidation.addValidation(this,R.id.layout_email, Patterns.EMAIL_ADDRESS,R.string.invalid_email_forget);
 
         //Login button action
         login.setOnClickListener(new View.OnClickListener() {
@@ -207,6 +213,34 @@ Login extends AppCompatActivity {
                 }
             }
         });
+
+
+
+        ForgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ForgetPasswordValidation.validate())
+                {
+                    String Email=userName.getText().toString();
+                    firebaseAuth.sendPasswordResetEmail(Email).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(Login.this, "Reset Password link has sent to Your EMail", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(Login.this, "Please Enter Valid Email"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+            }
+        });
+
+
+
+
 
 
 
