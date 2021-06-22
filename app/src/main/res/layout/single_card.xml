@@ -16,7 +16,7 @@
         app:cardElevation="10dp"
         app:cardUseCompatPadding="true"
         app:strokeColor="@color/black"
-        app:strokeWidth="1dp">
+        app:strokeWidth="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    android:src="@drawable/logo1"
+                    android:src="@drawable/userr"
                     app:civ_border_color="@color/darkgreen"
                     app:civ_border_width="1dp" />
 
@@ -95,7 +95,7 @@
                     android:id="@+id/card_image"
                     android:layout_width="320dp"
                     android:layout_height="210dp"
-                    android:src="@drawable/logo1"
+                    android:src="@drawable/imagegal"
                     app:siBorderWidth="0dp"
                     app:siRadius="0dp" />
 
@@ -104,7 +104,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#370617"
+                android:background="#E6E6E6"
                 android:orientation="horizontal">
 
                 <com.google.android.material.card.MaterialCardView
@@ -112,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="0dp"
                     android:layout_marginRight="0dp"
-                    app:cardBackgroundColor="#370617"
+                    app:cardBackgroundColor="#E6E6E6"
                     app:cardCornerRadius="5dp"
                     app:cardElevation="5dp"
                     app:cardUseCompatPadding="false"
@@ -127,10 +127,10 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="15dp"
                         android:paddingTop="5dp"
-                        android:paddingRight="0dp"
+                        android:paddingRight="5dp"
                         android:paddingBottom="15dp"
                         android:text="How to get rid of Koleroga in moonsoon season at coastal areas?"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/darkgreen"
                         android:textSize="16sp" />
 
                 </com.google.android.material.card.MaterialCardView>

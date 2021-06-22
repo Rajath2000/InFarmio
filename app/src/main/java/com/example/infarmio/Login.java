@@ -37,7 +37,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import static android.content.ContentValues.TAG;
 
-public class Login extends AppCompatActivity {
+public class
+Login extends AppCompatActivity {
     TextView loginText;
     TextInputEditText userName,Password;
     Button login;

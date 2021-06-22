@@ -30,7 +30,7 @@
     <style name="customchipstyle" parent="Widget.MaterialComponents.Chip.Filter">
         <item name="chipBackgroundColor">@color/chip_backgroundcolor</item>
         <item name="android:textColor">@color/chip_textcolor</item>
-        <item name="checkedIconTint">@color/lightgreen</item>
+        <item name="checkedIconTint">@color/white</item>
         <item name="rippleColor">@color/darkgreen</item>
         <item name="colorOnSurface">@color/purple_500</item>
 

@@ -5,5 +5,5 @@
     android:id="@+id/maincontainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightgreen"
+    android:background="#E6E6E6"
     tools:context=".MainActivity" />
