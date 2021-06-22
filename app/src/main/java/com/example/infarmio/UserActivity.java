@@ -66,8 +66,8 @@ public class UserActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Url=snapshot.child("profileurl").getValue().toString();
                 try {
+                    Url=snapshot.child("profileurl").getValue().toString();
                     Glide.with(UserActivity.this).asBitmap().load(Url).into(imageView);
                 }
                 catch (Exception e)

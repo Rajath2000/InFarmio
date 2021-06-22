@@ -225,9 +225,12 @@ public class PostEditFragment extends Fragment {
         Submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(awesomeValidation.validate()&& filpath!=null && validate() )
+                if(awesomeValidation.validate() && validate() )
                 {
+                    if(filpath!=null)
                     uploadtofirebase(filpath);
+                    else
+                     uploadtofirebasewithoutuploadingfile();
                 }
                 else
                 {
@@ -339,6 +342,54 @@ public class PostEditFragment extends Fragment {
                         });
                     }
                 });
+
+    }
+
+
+    public void uploadtofirebasewithoutuploadingfile()
+    {
+        String Username;
+//        final int postcount=0;
+        //get the Details From Frontend
+
+        progressDialog=new ProgressDialog(getContext());
+        progressDialog.setTitle("Saving Changes");
+        progressDialog.setMessage("please wait");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
+        try {
+            DatabaseReference adminInstance = FirebaseDatabase.getInstance().getReference().child("Admin").child(username).child("post").child("post" + postid);
+            DatabaseReference postDb = FirebaseDatabase.getInstance().getReference().child("Post").child("post"+postid);
+            //Creating the object of admin to upload information
+//                                    postid=postid;
+//                                    profileurl=profileurl;
+//                                    username=username;
+            title=Post_title.getText().toString();
+            probem=post_symtoms.getText().toString();
+            solution=post_soution.getText().toString();
+            contactNumber=post_ContactNumber.getText().toString();
+            reference=post_refernces.getText().toString();
+            Post post=new Post(postid,profileurl,username,title,probem,solution,catagory,contactNumber,reference,image);
+            adminInstance.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    progressDialog.dismiss();
+                    postDb.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+
+                        }
+                    });
+
+                }
+            });
+
+        }
+        catch (Exception e)
+        {
+        }
+
 
     }
 

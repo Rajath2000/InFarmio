@@ -24,6 +24,7 @@ import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
@@ -114,6 +115,11 @@ public class Login extends AppCompatActivity {
                                                                     startActivity(intent);
                                                                     finish();
 
+                                                                }
+                                                                else
+                                                                {
+                                                                    progressDialog.dismiss();
+                                                                    Toast.makeText(Login.this,task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                                                 }
                                                             }
                                                         });

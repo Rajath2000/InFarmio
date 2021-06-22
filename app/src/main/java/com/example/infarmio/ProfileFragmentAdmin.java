@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -109,7 +110,7 @@ public class ProfileFragmentAdmin extends Fragment {
     Bitmap bitmap;
     Button save;
     AwesomeValidation awesomeValidation;
-
+    TextView aboutus;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -127,6 +128,16 @@ public class ProfileFragmentAdmin extends Fragment {
 
         mAuth= FirebaseAuth.getInstance();
         String Username=emailparser(mAuth.getCurrentUser().getEmail());
+        aboutus=view.findViewById(R.id.about_us2);
+
+
+        aboutus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppCompatActivity activity=(AppCompatActivity)getContext();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.post_frame,new AboutUs()).addToBackStack(null).commit();
+            }
+        });
 
 
 
@@ -219,34 +230,14 @@ public class ProfileFragmentAdmin extends Fragment {
             }
         });
 
-//        favratious.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                DatabaseReference UserDb = FirebaseDatabase.getInstance().getReference().child("Admin").child(Username);
-//                UserDb.addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        String Password;
-//                        String username;
-//                        Password=snapshot.child("password").getValue().toString();
-//                        username=mAuth.getCurrentUser().getEmail();
-//                        Intent intent = new Intent(getContext(),favorites_activity.class);
-//                        intent.putExtra("Username",username);
-//                        intent.putExtra("Password",Password);
-//                        startActivity(intent);
-//
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                    }
-//                });
-//
-//
-//
-//            }
-//        });
+       favratious.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+
+               AppCompatActivity activity=(AppCompatActivity)getContext();
+               activity.getSupportFragmentManager().beginTransaction().replace(R.id.post_frame,new HomeFragmentAdmin()).addToBackStack(null).commit();
+           }
+     });
 
 
         logout.setOnClickListener(new View.OnClickListener() {

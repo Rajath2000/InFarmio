@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -108,6 +109,7 @@ public class ProfileFragment extends Fragment {
     FirebaseAuth firebaseAuth,mAuth;
     CircleImageView imageView;
     TextView username;
+    TextView aboutus;
     TextInputEditText phone;
     DatabaseReference databaseReference;
     String Url;
@@ -135,10 +137,19 @@ public class ProfileFragment extends Fragment {
         phone=view.findViewById(R.id.profile_phone_text);
         save=view.findViewById(R.id.Save_button);
         favratious=view.findViewById(R.id.profile_saved_post);
+        aboutus=view.findViewById(R.id.about_us);
 
         mAuth=FirebaseAuth.getInstance();
         String Username=emailparser(mAuth.getCurrentUser().getEmail());
 
+
+        aboutus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppCompatActivity activity=(AppCompatActivity)getContext();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.post_frame,new AboutUs()).addToBackStack(null).commit();
+            }
+        });
 
 
 
@@ -146,9 +157,9 @@ public class ProfileFragment extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Url=snapshot.child("profileurl").getValue().toString();
                 Phone=snapshot.child("phone").getValue().toString();
                 try {
+                    Url=snapshot.child("profileurl").getValue().toString();
                     Glide.with(getContext()).asBitmap().load(Url).into(imageView);
                 }catch (Exception e)
                 {

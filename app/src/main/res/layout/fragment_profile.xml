@@ -130,5 +130,15 @@
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             app:backgroundTint="#081C15" />
+
+        <TextView
+            android:id="@+id/about_us"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:text="About Us"
+            android:textSize="30sp" />
     </LinearLayout>
 </LinearLayout>
