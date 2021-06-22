@@ -141,6 +141,7 @@ public class FavUpdateFragment extends Fragment {
                 //on button action
                 floatingActionButton.setOnClickListener(new View.OnClickListener() {
                     private static final String TAG ="DataFRagment" ;
+                    int itemcount=0;
                     @Override
                     public void onClick(View v) {
                         //calling function to retrive user choice from adapter class
@@ -151,6 +152,17 @@ public class FavUpdateFragment extends Fragment {
                         progressDialog.setTitle("Saving Changes");
                         progressDialog.setMessage("Please Wait");
                         progressDialog.show();
+                        for(String item:myfavratios)
+                        {
+                            if(item.length()==0)
+                            {
+                                itemcount++;
+                            }
+                        }
+                        if(itemcount==myfavratios.size())
+                        {
+                            myfavratios.set(0,"All Crops");
+                        }
                         userrefrence.setValue(myfavratios).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {

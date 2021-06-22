@@ -7,9 +7,9 @@
         android:title="Home"/>
 
     <!--    Search item-->
-    <item android:id="@+id/menu_Search"
-        android:icon="@drawable/ic_baseline_search_24"
-        android:title="Search"/>
+<!--    <item android:id="@+id/menu_Search"-->
+<!--        android:icon="@drawable/ic_baseline_search_24"-->
+<!--        android:title="Search"/>-->
     <!--    post item-->
 <!--    <item android:id="@+id/menu_Post"-->
 <!--        android:icon="@drawable/ic_baseline_post_add_24"-->

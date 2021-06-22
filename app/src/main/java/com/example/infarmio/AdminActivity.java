@@ -107,8 +107,6 @@ public class AdminActivity extends AppCompatActivity {
 
                     case R.id.menu_home:temp=new HomeFragmentAdmin();
                         break;
-                    case R.id.menu_Search:temp=new SearchFragment();
-                        break;
                     case R.id.menu_Post:temp=new PostFragmentAdmin();
                         break;
                     case R.id.menu_Profile:temp=new ProfileFragmentAdmin();

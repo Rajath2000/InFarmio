@@ -9,15 +9,15 @@
     <LinearLayout
         android:id="@+id/tirle_bar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="40dp"
         android:layout_alignParentTop="true"
         android:background="@color/light_green"
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="40dp"
             android:layout_marginLeft="40dp"
@@ -44,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/user_navigation"
-        android:layout_marginTop="60dp">
+        android:layout_marginTop="40dp">
 
     </FrameLayout>
 
@@ -53,9 +53,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:paddingTop="7dp"
-        android:paddingBottom="7dp"
         app:backgroundTint="@color/light_green"
+        app:labelVisibilityMode="selected"
         app:menu="@menu/user_navigation" />
 
 </RelativeLayout>

@@ -142,8 +142,6 @@ public class UserActivity extends AppCompatActivity {
 
                     case R.id.menu_home:temp=new HomeFragment();
                         break;
-                    case R.id.menu_Search:temp=new SearchFragment();
-                        break;
                     case R.id.menu_Profile:temp=new ProfileFragment();
                         break;
 
