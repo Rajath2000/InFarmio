@@ -229,31 +229,6 @@ public class FavFragment extends Fragment {
 //
 //            }
 //        });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         return view;
     }
 

@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CardAdapterUser extends FirebaseRecyclerAdapter<postmodel,CardAdapterUser.myviewholderUser> {
+    DatabaseReference databaseReference;
+    String ProfileUrl;
 
 //    DatabaseReference itemInstence= FirebaseDatabase.getInstance().getReference().child("User").child(emailparser(FirebaseAuth.getInstance().getCurrentUser().getEmail())).child("Myfavratious");
 //    itemInstence.addValueEventListener(new ValueEventListener() {
@@ -67,7 +69,26 @@ public class CardAdapterUser extends FirebaseRecyclerAdapter<postmodel,CardAdapt
             holder.card_title.setText(model.getTitle());
             holder.card_catagory.setText(model.getCatagory());
             Glide.with(holder.card_image.getContext()).load(model.getImage()).into(holder.card_image);
-            Glide.with(holder.card_img.getContext()).load(model.getProfileurl()).into(holder.card_img);
+
+            databaseReference= FirebaseDatabase.getInstance().getReference().child("Admin").child(model.getUsername()).child("profileurl");
+
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    ProfileUrl=snapshot.getValue().toString();
+
+                        Glide.with(holder.card_img.getContext()).load(ProfileUrl).into(holder.card_img);
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+            //Glide.with(holder.card_img.getContext()).load(model.getProfileurl()).into(holder.card_img);
 
             holder.card_parent.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -80,7 +101,7 @@ public class CardAdapterUser extends FirebaseRecyclerAdapter<postmodel,CardAdapt
                             model.getImage(),
                             model.getPostid(),
                             model.getProbem(),
-                            model.getProfileurl(),
+                            ProfileUrl,
                             model.getReference(),
                             model.getSolution(),
                             model.getTitle(),
@@ -100,7 +121,23 @@ public class CardAdapterUser extends FirebaseRecyclerAdapter<postmodel,CardAdapt
                     holder.card_title.setText(model.getTitle());
                     holder.card_catagory.setText(model.getCatagory());
                     Glide.with(holder.card_image.getContext()).load(model.getImage()).into(holder.card_image);
-                    Glide.with(holder.card_img.getContext()).load(model.getProfileurl()).into(holder.card_img);
+
+                    databaseReference= FirebaseDatabase.getInstance().getReference().child("Admin").child(model.getUsername()).child("profileurl");
+
+                    databaseReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            ProfileUrl=snapshot.getValue().toString();
+                            Glide.with(holder.card_img.getContext()).load(ProfileUrl).into(holder.card_img);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                    //Glide.with(holder.card_img.getContext()).load(model.getProfileurl()).into(holder.card_img);
 
                     holder.card_parent.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -113,7 +150,7 @@ public class CardAdapterUser extends FirebaseRecyclerAdapter<postmodel,CardAdapt
                                     model.getImage(),
                                     model.getPostid(),
                                     model.getProbem(),
-                                    model.getProfileurl(),
+                                    ProfileUrl,
                                     model.getReference(),
                                     model.getSolution(),
                                     model.getTitle(),

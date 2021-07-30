@@ -15,11 +15,17 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.github.siyamed.shapeimageview.RoundedImageView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.Chip;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CardAdapter extends FirebaseRecyclerAdapter<postmodel,CardAdapter.myviewholder> {
-
+        DatabaseReference databaseReference;
+        String ProfileUrl;
 
     /**
      * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
@@ -33,11 +39,31 @@ public class CardAdapter extends FirebaseRecyclerAdapter<postmodel,CardAdapter.m
 
     @Override
     protected void onBindViewHolder(@NonNull myviewholder holder, int position, @NonNull postmodel model) {
+
         holder.card_username.setText(model.getUsername());
         holder.card_title.setText(model.getTitle());
         holder.card_catagory.setText(model.getCatagory());
         Glide.with(holder.card_image.getContext()).load(model.getImage()).into(holder.card_image);
-        Glide.with(holder.card_img.getContext()).load(model.getProfileurl()).into(holder.card_img);
+
+
+        //Username=emailparser(mAuth.getCurrentUser().getEmail());
+        databaseReference= FirebaseDatabase.getInstance().getReference().child("Admin").child(model.getUsername()).child("profileurl");
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ProfileUrl=snapshot.getValue().toString();
+                Glide.with(holder.card_img.getContext()).load(ProfileUrl).into(holder.card_img);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        //
 
         holder.card_parent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +75,7 @@ public class CardAdapter extends FirebaseRecyclerAdapter<postmodel,CardAdapter.m
                         model.getImage(),
                         model.getPostid(),
                         model.getProbem(),
-                        model.getProfileurl(),
+                        ProfileUrl,
                         model.getReference(),
                         model.getSolution(),
                         model.getTitle(),
